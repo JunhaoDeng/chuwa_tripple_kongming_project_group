@@ -3,14 +3,15 @@ import mongoose, { Schema } from "mongoose";
 const AccountSchema: Schema = new Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     enc_password: {
         type: String,
         required: true
     },
     type: {
-        type: String, // User | Vendor
+        type: String, // user | vendor
         required: true
     },
     products: [
