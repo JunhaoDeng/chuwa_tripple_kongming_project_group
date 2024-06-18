@@ -10,7 +10,7 @@ const AccountSchema: Schema = new Schema({
         required: true
     },
     type: {
-        type: String, // User / Vendor
+        type: String, // User | Vendor
         required: true
     },
     products: [
@@ -18,7 +18,11 @@ const AccountSchema: Schema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Product"
         }
-    ]
+    ],
+    cart: {
+        type: Schema.Types.ObjectId,
+        ref: "Cart"
+    }
 });
 
 const ProductSchema: Schema = new Schema({
@@ -32,7 +36,7 @@ const ProductSchema: Schema = new Schema({
     category: {
         type: String
     },
-    priceCent: {
+    price_cent: {
         type: Number,
         required: true
     },
@@ -58,5 +62,31 @@ const ProductSchema: Schema = new Schema({
     }
 });
 
+const CartSchema: Schema = new Schema({
+    items: [
+        {
+            product: {
+                type: Schema.Types.ObjectId,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
+    zip_code: {
+        type: String,
+    },
+    discount_cent: {
+        type: Number
+    },
+    estimated_total_cent: {
+        type: Number,
+        required: true
+    } 
+});
+
 export const Account: mongoose.Model<any> = mongoose.model("Account", AccountSchema);
 export const Product: mongoose.Model<any> = mongoose.model("Product", ProductSchema);
+export const Cart: mongoose.Model<any> = mongoose.model("Cart", CartSchema);
