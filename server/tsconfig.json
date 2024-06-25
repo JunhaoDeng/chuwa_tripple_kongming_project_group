@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./build"
+  },
+  "include": ["src/**/*"] //表示只会编译src下的.ts文件
+}
