@@ -37,6 +37,7 @@ export const signup = async function (req, res, next) {
     if (err.code === 11000) {
       err.message = "Sorry, that username and/or email is taken";
     }
+    console.log("err", err);
     return next({
       status: 400,
       message: err.message,

@@ -10,6 +10,7 @@ require("dotenv").config({ path: ".env" });
 var pwd = process.env.MONGODB_ATLAS_PWD || "";
 // console.log(pwd);
 var uri = "mongodb+srv://degjnd:".concat(encodeURIComponent(pwd), "@cluster0.hpelqzn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+// const uri: string = process.env.MONGODB_URI;
 mongoose_1.default
     .connect(uri)
     .then(function () {

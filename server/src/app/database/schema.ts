@@ -29,13 +29,20 @@ const AccountSchema: Schema = new Schema({
 
 AccountSchema.pre("save", async function (next) {
   try {
+    console.log("this", this);
     if (!this.isModified("enc_password")) {
+      console.log("not modified");
       return next();
     }
+    console.log("enc_password modified", this.enc_password);
+    console.log("enc_password modified", typeof this.enc_password);
     const hashedPassword = await bcrypt.hash(this.enc_password, 10);
+    // const hashedPassword = await bcrypt.hash(this.enc_password || "", 10);
+    console.log("hashedPassword", hashedPassword);
     this.enc_password = hashedPassword;
     return next();
   } catch (err) {
+    // console.log("err", err);
     return next(err);
   }
 });

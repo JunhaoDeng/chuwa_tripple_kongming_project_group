@@ -71,16 +71,23 @@ AccountSchema.pre("save", function (next) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
+                    console.log("this", this);
                     if (!this.isModified("enc_password")) {
+                        console.log("not modified");
                         return [2 /*return*/, next()];
                     }
+                    console.log("enc_password modified", this.enc_password);
+                    console.log("enc_password modified", typeof this.enc_password);
                     return [4 /*yield*/, bcrypt_1.default.hash(this.enc_password, 10)];
                 case 1:
                     hashedPassword = _a.sent();
+                    // const hashedPassword = await bcrypt.hash(this.enc_password || "", 10);
+                    console.log("hashedPassword", hashedPassword);
                     this.enc_password = hashedPassword;
                     return [2 /*return*/, next()];
                 case 2:
                     err_1 = _a.sent();
+                    // console.log("err", err);
                     return [2 /*return*/, next(err_1)];
                 case 3: return [2 /*return*/];
             }
