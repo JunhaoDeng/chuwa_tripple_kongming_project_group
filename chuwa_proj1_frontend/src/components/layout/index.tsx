@@ -3,6 +3,9 @@ import { Layout, Input, theme } from 'antd';
 import { UserOutlined, ShoppingCartOutlined, YoutubeFilled, TwitterOutlined, FacebookFilled } from '@ant-design/icons';
 import styles from '../../styles/Layout.module.css';
 import type { SearchProps } from 'antd/es/input/Search';
+import SigninForm from '../SigninForm';
+import SignUpForm from '../SignupForm';
+import UpdatePwdForm from '../UpdatePwdForm';
 
 const { Header, Content, Footer } = Layout;
 const { Search } = Input;
@@ -50,6 +53,13 @@ const WebLayout: React.FC = () => {
         >
           Content
         </div> */}
+        
+          {
+            <SignUpForm />
+          // <SigninForm />
+          // <UpdatePwdForm />
+          }
+        
       </Content>
       <Footer className={styles.footer}>
         ©{new Date().getFullYear()} All Rights Reserved

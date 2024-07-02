@@ -1,0 +1,35 @@
+.field_label {
+    color: grey;
+    margin-bottom: 0.5rem;
+}
+
+.field_input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 1rem;
+    width: 100%;
+    background-color: white;
+    color: black;
+    border: 1px solid rgb(188, 188, 188);
+    border-radius: 4px;
+    outline: none;
+}
+
+.field_input:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px 1px rgb(121, 101, 255);
+}
+
+.error_msg {
+    display: flex;
+    justify-content: right;
+    height: 0.85rem;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    color: red;
+}
+
+.field {
+    margin-bottom: 1rem;
+}
