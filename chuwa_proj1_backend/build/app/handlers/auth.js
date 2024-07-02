@@ -38,6 +38,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signin = exports.signup = void 0;
 var db_1 = require("../database/db");
+// import jwt from "jsonwebtoken";
+// const jwt = require("jsonwebtoken");
 var jsonwebtoken_1 = require("jsonwebtoken");
 require("dotenv").config({ path: ".env" });
 var signup = function (req, res, next) {
@@ -59,7 +61,7 @@ var signup = function (req, res, next) {
                     id = account.id, email = account.email;
                     console.log("id", id);
                     console.log("email", email);
-                    return [4 /*yield*/, jsonwebtoken_1.default.sign({
+                    return [4 /*yield*/, (0, jsonwebtoken_1.sign)({
                             id: id,
                             email: email,
                         }, process.env.JWT_SECRET_KEY)];
@@ -94,39 +96,49 @@ var signup = function (req, res, next) {
 exports.signup = signup;
 var signin = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var account, id, email, token, err_2;
+        var user, id, email, isMatch, token, err_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, db_1.Account.create(req.body)];
-                case 1:
-                    account = _a.sent();
-                    id = account.id, email = account.email;
-                    return [4 /*yield*/, jsonwebtoken_1.default.sign({
-                            id: id,
-                            email: email,
-                        }, process.env.JWT_SECRET_KEY)];
-                case 2:
-                    token = _a.sent();
-                    return [2 /*return*/, res.status(200).json({
-                            id: id,
-                            email: email,
-                            token: token,
+                    return [4 /*yield*/, db_1.Account.findOne({
+                            email: req.body.email,
                         })];
+                case 1:
+                    user = _a.sent();
+                    console.log("user", user);
+                    id = user.id, email = user.email;
+                    console.log("id", id);
+                    console.log("email", email);
+                    console.log("req.body.password", req.body.enc_password);
+                    return [4 /*yield*/, user.comparePassword(req.body.enc_password)];
+                case 2:
+                    isMatch = _a.sent();
+                    console.log("isMatch", isMatch);
+                    // if it all matches, log them in
+                    if (isMatch) {
+                        token = (0, jsonwebtoken_1.sign)({
+                            id: id,
+                            email: email,
+                        }, process.env.JWT_SECRET_KEY);
+                        return [2 /*return*/, res.status(200).json({
+                                id: id,
+                                email: email,
+                                token: token,
+                            })];
+                    }
+                    else {
+                        return [2 /*return*/, next({
+                                status: 400,
+                                message: "Invalid Email / Password.",
+                            })];
+                    }
+                    return [3 /*break*/, 4];
                 case 3:
                     err_2 = _a.sent();
-                    // see what kind of error
-                    // if it is a certain error
-                    // responde with username/email already taken
-                    // otherwise just send back with 400
-                    // if there is already a user with that email
-                    if (err_2.code === 11000) {
-                        err_2.message = "Sorry, that username and/or email is taken";
-                    }
                     return [2 /*return*/, next({
                             status: 400,
-                            message: err_2.message,
+                            message: "Invalid Email / Password.",
                         })];
                 case 4: return [2 /*return*/];
             }

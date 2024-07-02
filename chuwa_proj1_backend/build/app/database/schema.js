@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cart = exports.Product = exports.Account = void 0;
 var mongoose_1 = require("mongoose");
+// const bcrypt = require("bcrypt");
 var bcrypt_1 = require("bcrypt");
 var AccountSchema = new mongoose_1.Schema({
     email: {
@@ -78,7 +79,7 @@ AccountSchema.pre("save", function (next) {
                     }
                     console.log("enc_password modified", this.enc_password);
                     console.log("enc_password modified", typeof this.enc_password);
-                    return [4 /*yield*/, bcrypt_1.default.hash(this.enc_password, 10)];
+                    return [4 /*yield*/, (0, bcrypt_1.hash)(this.enc_password, 10)];
                 case 1:
                     hashedPassword = _a.sent();
                     // const hashedPassword = await bcrypt.hash(this.enc_password || "", 10);
@@ -101,7 +102,7 @@ AccountSchema.methods.comparePassword = function (candidatePassword, next) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, bcrypt_1.default.compare(candidatePassword, this.enc_password)];
+                    return [4 /*yield*/, (0, bcrypt_1.compare)(candidatePassword, this.enc_password)];
                 case 1:
                     isMatched = _a.sent();
                     return [2 /*return*/, isMatched];

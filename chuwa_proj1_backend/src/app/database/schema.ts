@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
+// const bcrypt = require("bcrypt");
+import { hash, compare } from "bcrypt";
 
 const AccountSchema: Schema = new Schema({
   email: {
@@ -36,7 +37,7 @@ AccountSchema.pre("save", async function (next) {
     }
     console.log("enc_password modified", this.enc_password);
     console.log("enc_password modified", typeof this.enc_password);
-    const hashedPassword = await bcrypt.hash(this.enc_password, 10);
+    const hashedPassword = await hash(this.enc_password, 10);
     // const hashedPassword = await bcrypt.hash(this.enc_password || "", 10);
     console.log("hashedPassword", hashedPassword);
     this.enc_password = hashedPassword;
@@ -52,7 +53,7 @@ AccountSchema.methods.comparePassword = async function (
   next
 ) {
   try {
-    let isMatched = await bcrypt.compare(candidatePassword, this.enc_password);
+    let isMatched = await compare(candidatePassword, this.enc_password);
     return isMatched;
   } catch (err) {
     return next(err);
