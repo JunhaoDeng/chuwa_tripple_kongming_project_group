@@ -2,8 +2,13 @@ import styles from '../../styles/Layout.module.css';
 import { Layout, Input, theme } from 'antd';
 import { UserOutlined, ShoppingCartOutlined, YoutubeFilled, TwitterOutlined, FacebookFilled } from '@ant-design/icons';
 import type { SearchProps } from 'antd/es/input/Search';
+
 import Products from '../../pages/Products';
 import ProductDetail from '../../pages/ProductDetail';
+import SigninForm from '../SigninForm';
+import SignUpForm from '../SignupForm';
+import UpdatePwdForm from '../UpdatePwdForm';
+
 
 const { Search } = Input;
 const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value);
@@ -32,6 +37,11 @@ const WebLayout: React.FC = () => {
             </header>
             <main style={{margin: "0rem", backgroundColor: '#F9FAFB'}}>
                 <ProductDetail />
+              {
+          // <SignUpForm />
+          // <SigninForm />
+          // <UpdatePwdForm />
+          }
             </main>
             <footer className={styles.footer}>
                 ©{new Date().getFullYear()} All Rights Reserved
