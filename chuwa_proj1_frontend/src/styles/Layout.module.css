@@ -6,8 +6,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* justify-content: space-between; */
+    
+    padding: 0.5rem 3rem;
 }
+
 .titleWrapper {
     flex-grow: 1;
 
@@ -16,15 +18,18 @@
     align-items: baseline;
     justify-content: start;
 }
+
 .title {
     margin-right: 0.5rem;
     color: var(--text-white);
     font-size: x-large;
     font-weight: 1000;
 }
+
 .titleMobile {
     display: none;
 }
+
 .subtitle {
     color: var(--text-white);
     font-size: small;
@@ -51,7 +56,8 @@
     align-items: center;
     gap: 0.5rem;
 }
-.userIcon > * {
+
+.userIcon>* {
     font-size: 1.5rem;
 }
 
@@ -62,23 +68,30 @@
     align-items: center;
     gap: 0.5rem;
 }
+
 .cartButton {
     border: none;
 
     background-color: var(--bg-dark);
     color: var(--white);
 }
-.cartIcon > * {
+
+.cartIcon>* {
     font-size: 1.6rem;
 }
 
 /* content */
-.content {
+/* .content {
     height: 100%;
-}
+
+    background-color: red;
+    
+} */
 
 /* footer */
 .footer {
+    padding: 1.5rem 3rem;
+
     background-color: var(--bg-dark);
     color: var(--white);
 
@@ -100,6 +113,7 @@
     flex-direction: row;
     gap: 1rem;
 }
+
 .iconsWrapper {
     list-style: none;
     color: var(--white);
@@ -116,6 +130,7 @@ a {
 
 /* adaptive */
 @media (max-width: 44rem) {
+
     /* header */
     .header {
         /* background-color: var(--bg-dark);
@@ -124,9 +139,9 @@ a {
         height: auto;
 
         display: grid;
-        grid-template-areas: 
-        'area1 area2'
-        'area3 area3';
+        grid-template-areas:
+            'area1 area2'
+            'area3 area3';
         gap: 1rem;
         /* align-items: center; */
         /* justify-content: space-between; */
@@ -135,12 +150,15 @@ a {
     .titleWrapper {
         grid-area: area1;
     }
+
     .title {
         margin-right: 0rem;
     }
+
     .title {
         display: none;
     }
+
     .titleMobile {
         display: block;
 
@@ -148,9 +166,10 @@ a {
         font-size: x-large;
         font-weight: 1000;
     }
+
     .userFieldWrapper {
         grid-area: area2;
-    
+
         gap: 1.5rem;
         align-items: baseline;
         justify-content: flex-end;
@@ -161,7 +180,7 @@ a {
         grid-area: area3;
 
     }
-    
+
 
     .signLink {
         display: none;
@@ -170,22 +189,22 @@ a {
     /* footer */
     .footer {
         display: grid;
-        grid-template-areas: 
-        'line1'
-        'line2'
-        'line3';
+        grid-template-areas:
+            'line1'
+            'line2'
+            'line3';
 
         gap: 1rem;
         align-items: center;
         justify-content: center;
         text-align: center;
     }
-    
+
     .iconsWrapper {
         grid-area: line1;
         justify-self: center;
     }
-    
+
     .footerMenu {
         grid-area: line2;
         justify-self: center;
