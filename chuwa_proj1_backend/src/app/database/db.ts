@@ -12,14 +12,14 @@ const uri: string = `mongodb+srv://degjnd:${encodeURIComponent(
 )}@cluster0.hpelqzn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 // const uri: string = process.env.MONGODB_URI;
 
-mongoose
-  .connect(uri)
-  .then(() => {
-    console.log("Connected");
-  })
-  .catch((err: Error) => {
-    console.log(err);
-  });
+// mongoose
+//   .connect(uri)
+//   .then(() => {
+//     console.log("Connected");
+//   })
+//   .catch((err: Error) => {
+//     console.log(err);
+//   });
 
 // Import schemas
 import { Account, Product, Cart } from "./schema";

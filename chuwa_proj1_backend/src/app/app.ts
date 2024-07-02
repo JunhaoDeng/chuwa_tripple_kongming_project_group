@@ -1,7 +1,7 @@
 import express = require("express");
 import { connect_db } from "./database/db";
 import authRoutes from "./routes/auth";
-require("dotenv").config({ path: ".env" });
+// require("dotenv").config({ path: ".env" });
 
 const app: express.Application = express();
 
