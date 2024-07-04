@@ -3,6 +3,10 @@
     margin-bottom: 0.5rem;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .field_input {
     -webkit-appearance: none;
     -moz-appearance: none;
