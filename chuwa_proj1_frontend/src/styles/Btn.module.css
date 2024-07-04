@@ -1,0 +1,9 @@
+.uniformPrimaryBtn {
+    background-color: var(--bg-purple);
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.defaultBtn {
+    background-color: var(--bg-light-white);
+}

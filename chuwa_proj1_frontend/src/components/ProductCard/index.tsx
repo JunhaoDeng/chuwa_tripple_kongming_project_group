@@ -1,28 +1,28 @@
-// import React from 'react';
+import styles from '../../styles/Products.module.css';
+import btnStyles from '../../styles/Btn.module.css';
+
 import { Card, Button, Flex } from 'antd';
+import QuantitiController from '../QuantityController';
+
 const { Meta } = Card;
-const App = () => (
+const ItemCard = () => (
   <Card
+    className={styles.productCard}
     hoverable
-    style={{
-      gridColumn: "span 3",
-      padding: "0.5rem",
-      border: "1px solid #CCCCCC",
-      borderRadius: "5px"
-    }}
-    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+    styles={{body: {padding: '0.5rem'}}}
+    cover={<img alt="example" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />}
     actions={[
-      <Flex style={{margin: "0 0.5rem"}} gap="small" justify="space-around" wrap>
-        <Button style={{flexGrow: 1}} type="primary">Add</Button>
-        <Button style={{flexGrow: 1}}>Edit</Button>
+      <Flex gap="small" justify="space-around" wrap>
+        <Button className={btnStyles.uniformPrimaryBtn} style={{flexGrow: 1}} size='small'>Add</Button>
+        {/* <QuantitiController /> */}
+        <Button style={{flexGrow: 1}} size='small'>Edit</Button>
       </Flex>
     ]}
   >
-
     <Meta
-      title={<p style={{ fontSize: '0.8rem', fontWeight: '500', color: "#6B7280" }}>Apple iPhone 11, 128G</p>}
-      description={<p style={{ fontSize: '1.1rem', fontWeight: '600', color: "black" }}>$499.00</p>}
+      title={<p className={styles.productCardTitle}>Apple iPhone 11, 128G</p>}
+      description={<p className={styles.productCardPrice}>$499.00</p>}
     />
   </Card>
 );
-export default App;
+export default ItemCard;
