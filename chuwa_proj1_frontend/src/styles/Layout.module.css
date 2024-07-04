@@ -75,10 +75,17 @@
     background-color: var(--bg-dark);
     color: var(--white);
 }
+.cartButton :hover {
+    color: var(--text-purple);
+}
 
 .cartIcon>* {
     font-size: 1.6rem;
 }
+
+/* .cartDrawer button>* {
+    color: var(--text-white);
+} */
 
 /* content */
 /* .content {
