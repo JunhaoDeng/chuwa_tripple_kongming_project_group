@@ -1,4 +1,4 @@
-import Layout from './components/Layout';
+import Layout from './components/layout/index';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 // import './App.css'
