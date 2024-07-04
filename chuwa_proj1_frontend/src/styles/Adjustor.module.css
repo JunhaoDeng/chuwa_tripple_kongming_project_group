@@ -1,0 +1,12 @@
+.responsiveWrap {
+    /* flex-direction: row; */
+}
+
+/* adaptive */
+@media (max-width: 44rem) {
+
+    /* header */
+    .responsiveWrap {
+        flex-direction: column;
+    }
+}

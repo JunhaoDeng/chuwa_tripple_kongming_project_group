@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from '../../styles/Products.module.css';
+import btnStyles from '../../styles/Btn.module.css';
+import responsiveStyles from '../../styles/Adjustor.module.css';
 
 // const style: React.CSSProperties = { background: '#0092ff', padding: '8px 0' };
 import { Button, Card, Flex, Typography } from 'antd';
@@ -21,11 +23,11 @@ const imgStyle: React.CSSProperties = {
 };
 
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 
 
-const ProductDetail: React.FC = () => {
+const ProductDetailPage: React.FC = () => {
 
     return (
         <div className={styles.pageWrapper}>
@@ -34,7 +36,7 @@ const ProductDetail: React.FC = () => {
             </div>
             {/* <div className={styles.productsBoard}> */}
             <Card style={cardStyle} styles={{ body: { padding: 0, overflow: 'hidden', height: '100%' } }}>
-                <Flex justify="space-between" style={{ height: '100%' }}>
+                <Flex className={responsiveStyles.responsiveWrap} justify="space-between" style={{ height: '100%' }}>
                     <img
                         alt="avatar"
                         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
@@ -52,7 +54,7 @@ const ProductDetail: React.FC = () => {
                             </Paragraph>
                         </Typography>
                         <Flex style={{width: '70%', marginTop: '1rem'}} gap="small" wrap>
-                            <Button style={{ flex: '1 1 0' }} type="primary">Add To Cart</Button>
+                            <Button className={btnStyles.uniformPrimaryBtn} style={{ flex: '1 1 0' }} type="primary">Add To Cart</Button>
                             <Button style={{ flex: '1 1 0' }}>Edit</Button>
                         </Flex>
                     </Flex>
@@ -64,4 +66,4 @@ const ProductDetail: React.FC = () => {
     )
 }
 
-export default ProductDetail;
+export default ProductDetailPage;
