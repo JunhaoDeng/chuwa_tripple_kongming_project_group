@@ -8,6 +8,7 @@ import ProductDetail from '../../pages/ProductDetail';
 import SigninForm from '../SigninForm';
 import SignUpForm from '../SignupForm';
 import UpdatePwdForm from '../UpdatePwdForm';
+import CreateProductForm from '../CreateProductForm';
 
 
 const { Search } = Input;
@@ -36,11 +37,12 @@ const WebLayout: React.FC = () => {
                 </div>
             </header>
             <main style={{margin: "0rem", backgroundColor: '#F9FAFB'}}>
-                <ProductDetail />
+                {/* <ProductDetail /> */}
               {
-          // <SignUpForm />
+        //   <SignUpForm />
           // <SigninForm />
           // <UpdatePwdForm />
+          <CreateProductForm />
           }
             </main>
             <footer className={styles.footer}>

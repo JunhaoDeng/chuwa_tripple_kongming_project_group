@@ -1,22 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux'
+
 import "../styles/Field.css"
+import "../styles/AreaField.css"
 
 type FieldPropType = {
     label: string,
-    type: string,
     // this check function will check if current input data (which is stored in redux) is valid.
     // if valid, return an empty string
     // if invalid, return error message
     checkFunc: (data: string) => string, 
     placeholder: string,
-    inputDataSelectorFunc: (state: any) => any
+    inputDataSelectorFunc: (state: any) => any,
     label_bold?: boolean
-    input_disabled?: boolean 
 }
 
-export default function Field(props: FieldPropType) {
+export default function AreaField(props: FieldPropType) {
 
     // const input_data = useSelector( props.inputDataSelectorFunc );
     const [input_data, setInputData] = useState<string>(""); // test
@@ -35,7 +34,7 @@ export default function Field(props: FieldPropType) {
     return (
         <div className="field">
             <div className={ "field_label " + (props.label_bold ? "bold" : "") }>{ props.label }</div>
-            <input className='field_input' type={ props.type } placeholder={ props.placeholder } disabled={ props.input_disabled }
+            <textarea className='field_input area_field_input' placeholder={ props.placeholder } 
                     onChange={ (e) => handleInputChange(e.target.value) }
                     onBlur={ handleCheck } style={ { borderColor: error_msg === "" ? "rgb(188, 188, 188)" : "red"} }/>
             <div className='error_msg'>{ error_msg }</div>

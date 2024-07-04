@@ -1,0 +1,28 @@
+.dropdown_anchor {
+    position: relative;
+}
+
+.dropdown_icon_container {
+    position: absolute;
+    bottom: 2rem;
+    right: 1rem;
+    cursor: pointer;
+}
+
+.dropdown_menu {
+    position: absolute;
+    left: 0rem;
+    top: 80%;
+    background-color: white;
+    z-index: 1000;
+    border: 1px solid rgb(188, 188, 188);
+    border-radius: 4px;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 15rem;
+}
+
+.dropdown_item {
+    padding: 1rem;
+    border-bottom: 1px solid rgb(205, 205, 205);
+}
