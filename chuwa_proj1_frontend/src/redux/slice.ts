@@ -3,9 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const Slice = createSlice({
     name: "management-chuwa-slice",
     initialState: {
-        layout: { 
-            searchbar_data: "" // search bar current input data
-        },
         signin: { // signin page
             email: "", // email input data
             password: "", // password input data
