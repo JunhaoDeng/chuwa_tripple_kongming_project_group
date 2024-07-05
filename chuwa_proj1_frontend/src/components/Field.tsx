@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux'
 import "../styles/Field.css"
+import { RootState, AppDispatch } from '../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 type FieldPropType = {
     label: string,
@@ -11,25 +11,28 @@ type FieldPropType = {
     // if invalid, return error message
     checkFunc: (data: string) => string, 
     placeholder: string,
-    inputDataSelectorFunc: (state: any) => any
-    label_bold?: boolean
+    inputDataSelectorFunc: (state: RootState) => any,
+    errormsgDataSelectorFunc: (state: RootState) => any,
+    inputDataAction: any,
+    errormsgAction: any,
+    label_bold?: boolean,
     input_disabled?: boolean 
 }
 
 export default function Field(props: FieldPropType) {
 
-    // const input_data = useSelector( props.inputDataSelectorFunc );
-    const [input_data, setInputData] = useState<string>(""); // test
-    const [error_msg, setErrorMsg] = useState<string>("");
+    const input_data = useSelector( props.inputDataSelectorFunc );
+    const error_msg = useSelector( props.errormsgDataSelectorFunc );
+
+    const dispatch: AppDispatch = useDispatch();
 
     const handleInputChange = (value: string) => {
-        // useDispatch(...)
-        setInputData(value); // test
+        dispatch(props.inputDataAction(value));
     };
 
     const handleCheck = () => {
         const msg: string = props.checkFunc(input_data);
-        setErrorMsg(msg);
+        dispatch(props.errormsgAction(msg));
     }
 
     return (

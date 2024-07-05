@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signin_set_email, signin_set_password, signin_toggle_show_password, signup_set_email, signup_set_password, update_password_set_email } from './action';
+import { signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg, signin_toggle_show_password, signup_set_email, signup_set_email_errormsg, signup_set_password, signup_set_password_errormsg, update_password_set_email, update_password_set_email_errormsg } from './action';
 
 const Slice = createSlice({
     name: "management-chuwa-slice",
@@ -16,6 +16,7 @@ const Slice = createSlice({
             email_errormsg: "",
             password: "", // password input data
             password_errormsg: ""
+            // TODO: add checkbox state
         },
         update_password: { // update_password page
             email: "", // email input data
@@ -76,14 +77,29 @@ const Slice = createSlice({
         }
     },
     reducers: {
-        signin_set_email: signin_set_email,
-        signin_set_password: signin_set_password,
-        signin_toggle_show_password: signin_toggle_show_password,
-        signup_set_email: signup_set_email,
-        signup_set_password: signup_set_password,
-        update_password_set_email: update_password_set_email
+        signinSetEmail: signin_set_email,
+        signinSetEmailErrormsg: signin_set_email_errormsg,
+        signinSetPassword: signin_set_password,
+        signinSetPasswordErrormsg: signin_set_password_errormsg,
+        signinToggleShowPassword: signin_toggle_show_password,
+
+        signupSetEmail: signup_set_email,
+        signupSetEmailErrormsg: signup_set_email_errormsg,
+        signupSetPassword: signup_set_password,
+        signupSetPasswordErrormsg: signup_set_password_errormsg,
+
+        updatePasswordSetEmail: update_password_set_email,
+        updatePasswordSetEmailErrormsg: update_password_set_email_errormsg
     }
 });
 
-// export const {} = Slice.actions;
+export const { signinSetEmail, signinSetEmailErrormsg, 
+        signinSetPassword, signinSetPasswordErrormsg, 
+        signinToggleShowPassword, 
+
+        signupSetEmail, signupSetEmailErrormsg,
+        signupSetPassword, signupSetPasswordErrormsg,
+
+        updatePasswordSetEmail, updatePasswordSetEmailErrormsg } = Slice.actions;
+
 export default Slice.reducer

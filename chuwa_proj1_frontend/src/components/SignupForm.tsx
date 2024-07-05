@@ -3,6 +3,7 @@ import Field from './Field';
 import CheckboxRow from './CheckboxRow';
 import { CloseOutlined } from '@ant-design/icons';
 import { RootState } from '../redux/store';
+import { signupSetEmail, signupSetEmailErrormsg, signupSetPassword, signupSetPasswordErrormsg } from '../redux/slice';
 
 // a's will be replaced by Link element in the future
 
@@ -45,9 +46,15 @@ export default function SignUpForm() {
           <div className='close_icon_container'><CloseOutlined /></div>
           <div className='form_title'>Sign up an account</div>
           <Field label='Email' type='email' checkFunc={ checkEmailFunc } 
-              placeholder='Enter your email' inputDataSelectorFunc={ (state: RootState) => state.signup.email }/>
+              placeholder='Enter your email' inputDataSelectorFunc={ (state: RootState) => state.signup.email }
+              errormsgDataSelectorFunc={ (state: RootState) => state.signup.email_errormsg }
+              inputDataAction={ signupSetEmail }
+              errormsgAction={ signupSetEmailErrormsg }/>
           <Field label='Password' type='password' checkFunc={ checkPasswordFunc }
-              placeholder='Enter your password' inputDataSelectorFunc={ (state: RootState) => state.signup.password }/>
+              placeholder='Enter your password' inputDataSelectorFunc={ (state: RootState) => state.signup.password }
+              errormsgDataSelectorFunc={ (state: RootState) => state.signup.password_errormsg}
+              inputDataAction={ signupSetPassword }
+              errormsgAction={ signupSetPasswordErrormsg }/>
           <CheckboxRow label='This is a vendor account' dataSelectorFunc={ () => {} }/>
           <button className='form_submit_button'>Create Account</button>
           <div className='alt_label'>Already have an account? <a className='link' href='google.com'>Sign in</a></div>
