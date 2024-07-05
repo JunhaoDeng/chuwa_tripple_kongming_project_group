@@ -8,7 +8,7 @@ const Slice = createSlice({
             password: "", // password input data
             show_password: false // whether the password is shown or hide
         },
-        singup: { // signup page
+        signup: { // signup page
             email: "", // email input data
             password: "" // password input data
         },
