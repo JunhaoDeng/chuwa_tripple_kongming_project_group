@@ -1,30 +1,43 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { signin_set_email, signin_set_password, signin_toggle_show_password, signup_set_email, signup_set_password, update_password_set_email } from './action';
 
 const Slice = createSlice({
     name: "management-chuwa-slice",
     initialState: {
         signin: { // signin page
             email: "", // email input data
+            email_errormsg: "",
             password: "", // password input data
+            password_errormsg: "",
             show_password: false // whether the password is shown or hide
         },
         signup: { // signup page
             email: "", // email input data
-            password: "" // password input data
+            email_errormsg: "",
+            password: "", // password input data
+            password_errormsg: ""
         },
         update_password: { // update_password page
-            email: "" // email input data
+            email: "", // email input data
+            email_errormsg: ""
         },
         create_product: { // create_product page
             name: "", // product name input data
+            name_errormsg: "",
             description: "", // product description input data
+            description_errormsg: "",
             category: "", // category input data
+            category_errormsg: "",
             price: null, // price input data. Should be number
+            price_errormsg: "",
             quantity: null, // quantity input data. Should be number
+            quantity_errormsg: "",
             image_link: "", // image link input data. 
 
             // current image link. This is what shown in image preview and is updated after user clicks "update"
-            image_link_preview: "" 
+            image_link_preview: "",
+            // set to true if preview image failed to load
+            image_link_preview_error: false 
         },
         products: {
             // list of product shown on the web page
@@ -62,7 +75,14 @@ const Slice = createSlice({
             // tax and estimated total is calculated with subtotal and discount. 
         }
     },
-    reducers: {}
+    reducers: {
+        signin_set_email: signin_set_email,
+        signin_set_password: signin_set_password,
+        signin_toggle_show_password: signin_toggle_show_password,
+        signup_set_email: signup_set_email,
+        signup_set_password: signup_set_password,
+        update_password_set_email: update_password_set_email
+    }
 });
 
 // export const {} = Slice.actions;

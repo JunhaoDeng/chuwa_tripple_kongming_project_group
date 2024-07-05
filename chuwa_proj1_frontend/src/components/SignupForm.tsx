@@ -2,6 +2,7 @@ import '../styles/Form.css';
 import Field from './Field';
 import CheckboxRow from './CheckboxRow';
 import { CloseOutlined } from '@ant-design/icons';
+import { RootState } from '../redux/store';
 
 // a's will be replaced by Link element in the future
 
@@ -44,9 +45,9 @@ export default function SignUpForm() {
           <div className='close_icon_container'><CloseOutlined /></div>
           <div className='form_title'>Sign up an account</div>
           <Field label='Email' type='email' checkFunc={ checkEmailFunc } 
-              placeholder='Enter your email' inputDataSelectorFunc={ () => {} }/>
+              placeholder='Enter your email' inputDataSelectorFunc={ (state: RootState) => state.signup.email }/>
           <Field label='Password' type='password' checkFunc={ checkPasswordFunc }
-              placeholder='Enter your password' inputDataSelectorFunc={ () => {} }/>
+              placeholder='Enter your password' inputDataSelectorFunc={ (state: RootState) => state.signup.password }/>
           <CheckboxRow label='This is a vendor account' dataSelectorFunc={ () => {} }/>
           <button className='form_submit_button'>Create Account</button>
           <div className='alt_label'>Already have an account? <a className='link' href='google.com'>Sign in</a></div>
