@@ -89,11 +89,11 @@ const ProductSchema: Schema = new Schema({
   },
   create_time: {
     type: Date,
-    required: true,
+    // required: true,
   },
   update_time: {
     type: Date,
-    required: true,
+    // required: true,
   },
 });
 
