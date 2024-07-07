@@ -1,13 +1,15 @@
 import express = require("express");
 import { Product, connect_db } from "./database/db";
 import authRoutes from "./routes/auth";
+import cors = require("cors");
 // require("dotenv").config({ path: ".env" });
 import { loginRequired, ensureCorrectUser } from "./middleware/auth";
 import productRoutes from "./routes/product";
 
 const app: express.Application = express();
 
-app.use(express.json()); // 确保你能够解析 JSON 请求体
+app.use(express.json());
+app.use(cors());
 
 console.log("connecting to db");
 connect_db();
@@ -17,7 +19,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!21321dsfsd");
 });
 
-app.use("/api/auth", authRoutes); // 使用路由
+app.use("/api/auth", authRoutes);
 app.use(
   "/api/users/:id/product",
   loginRequired,
