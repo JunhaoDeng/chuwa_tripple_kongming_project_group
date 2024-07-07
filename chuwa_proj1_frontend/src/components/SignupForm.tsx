@@ -5,8 +5,17 @@ import { CloseOutlined } from '@ant-design/icons';
 import { RootState } from '../redux/store';
 import { signupSetEmail, signupSetEmailErrormsg, signupSetIsvendor, signupSetPassword, signupSetPasswordErrormsg } from '../redux/slice';
 import { useSelector } from 'react-redux';
+// import { hash } from "bcrypt"; // bcrypt cause react unable to run so I use native crypto instead.
+import { HOST } from '../config';
 
 // a's will be replaced by Link element in the future
+
+type SignupDataType = {
+  id: number,
+  email: string,
+  enc_password: string,
+  type: string
+}
 
 export default function SignUpForm() {
     const checkEmailFunc = (data: string) => {
@@ -56,7 +65,27 @@ export default function SignUpForm() {
     const is_vendor: boolean = useSelector(vendorchecked_selector);
 
     const handleFormSubmit = () => {
-        
+      const signup_data: SignupDataType = {
+        id: 0,
+        email: email,
+        enc_password: password,
+        type: is_vendor ? "vendor" : "user"
+      };
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(signup_data)
+      };
+      fetch(`${HOST}/api/auth/signup`, options)
+      .then(response => { console.log(response);
+       return response.json();})
+      .then(data => console.log(data)) // TODO: other things
+      .catch(err => {
+        // TODO: redirect to something went wrong page
+        alert("Error: " + err);
+      });
     }
 
     return (
