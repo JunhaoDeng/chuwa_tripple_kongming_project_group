@@ -1,5 +1,5 @@
 import { Product, Account } from "../database/db";
-// POST - /api/users/:id/messages
+// POST - /api/users/:id/product
 export const createProduct = async function (req, res, next) {
   try {
     console.log("in createProduct");
@@ -46,29 +46,75 @@ export const createProduct = async function (req, res, next) {
   }
 };
 
-// // GET - /api/users/:id/messages/:message_id
-// exports.getMessage = async function (req, res, next) {
-//   try {
-//     const message = await db.Message.findById(req.params.message_id);
-//     return res.status(200).json(message);
-//   } catch (err) {
-//     return next(err);
-//   }
-// };
+// GET - /api/users/:id/messages/:product_id
+export const getProduct = async function (req, res, next) {
+  try {
+    const product = await Product.findById(req.params.product_id);
+    return res.status(200).json(product);
+  } catch (err) {
+    return next(err);
+  }
+};
 
-// // DELETE - /api/users/:id/messages/:message_id
-// exports.deleteMessage = async function (req, res, next) {
-//   try {
-//     // find the message by id
-//     console.log(req.params);
-//     const foundMessage = await db.Message.findById(req.params.message_id);
-//     // !! not using findByIdAndRemove because we have the pre remove hook in models/messages.js
+// DELETE - /api/users/:id/messages/:product_id
+export const deleteProduct = async function (req, res, next) {
+  try {
+    // find the message by id
+    console.log(req.params);
+    const foundProduct = await Product.findById(req.params.product_id);
+    // !! not using findByIdAndRemove because we have the pre remove hook in models/messages.js
 
-//     // remove the message
-//     await foundMessage.deleteOne();
-//     // return a success message
-//     return res.status(200).json(foundMessage);
-//   } catch (err) {
-//     return next(err);
-//   }
-// };
+    // remove the message
+    await foundProduct.deleteOne();
+    // return a success message
+    return res.status(200).json(foundProduct);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// PUT - /api/users/:id/messages/:product_id
+export const updateProduct = async function (req, res, next) {
+  try {
+    const {
+      name,
+      description,
+      category,
+      price_cent,
+      quantity,
+      img_link,
+      update_time,
+    } = req.body;
+
+    const productId = req.params.product_id; // 假设从路由参数中获取产品的 _id
+
+    // 查找并更新产品
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      {
+        $set: {
+          name,
+          description,
+          category,
+          price_cent,
+          quantity,
+          img_link,
+          update_time,
+        },
+      },
+      { new: true } // 返回更新后的文档
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    console.log("updatedProduct", updatedProduct);
+
+    // 如果需要更新用户的信息，可以根据实际需求处理
+    // 例如更新最后修改时间等
+
+    return res.status(200).json(updatedProduct);
+  } catch (err) {
+    return next(err);
+  }
+};
