@@ -36,13 +36,13 @@ const ProductDetailPage: React.FC = () => {
             </div>
             {/* <div className={styles.productsBoard}> */}
             <Card style={cardStyle} styles={{ body: { padding: 0, overflow: 'hidden', height: '100%' } }}>
-                <Flex className={responsiveStyles.responsiveWrap} justify="space-between" style={{ height: '100%' }}>
+                <Flex className={responsiveStyles.responsiveWrap} justify="space-between" style={{ height: '100%' }} gap='large'>
                     <img
                         alt="avatar"
                         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                         style={imgStyle}
                     />
-                    <Flex vertical align="flex-start" style={{ padding: '2rem 3rem' }}>
+                    <Flex vertical align="flex-start" >
                         <Typography>
                             <Text>Category1</Text>
                             <Title style={{margin: 0}} level={2}>Meta Quest2 VR headset</Title>
@@ -53,7 +53,7 @@ const ProductDetailPage: React.FC = () => {
                                 duplication and reduce the efficiency of development.
                             </Paragraph>
                         </Typography>
-                        <Flex style={{width: '70%', marginTop: '1rem'}} gap="small" wrap>
+                        <Flex style={{width: '70%', marginTop: '1rem'}} gap="small">
                             <Button className={btnStyles.uniformPrimaryBtn} style={{ flex: '1 1 0' }} type="primary">Add To Cart</Button>
                             <Button style={{ flex: '1 1 0' }}>Edit</Button>
                         </Flex>

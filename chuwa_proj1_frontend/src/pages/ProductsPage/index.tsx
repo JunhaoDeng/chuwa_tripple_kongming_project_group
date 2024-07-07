@@ -15,7 +15,7 @@ const ProductsPage: React.FC = () => {
     // }
 
     // Pagination
-    const [current, setCurrent] = useState(3);
+    const [current, setCurrent] = useState(1);
 
     const onChange: PaginationProps['onChange'] = (page) => {
         console.log(page);
@@ -44,7 +44,7 @@ const ProductsPage: React.FC = () => {
             </Flex>
             <ProductsBoard />
             {/* <Pagination align="end" defaultCurrent={1} total={50} /> */}
-            <Pagination className={styles.pageNav} current={current} onChange={onChange} total={50} />
+            <Pagination className={styles.pageNav} current={current} onChange={onChange} total={100} showSizeChanger={false}/>
 
         </div>
     )
