@@ -1,7 +1,7 @@
 import { Account } from "../database/db";
 // import jwt from "jsonwebtoken";
-// const jwt = require("jsonwebtoken");
-import { sign } from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
+// import { sign } from "jsonwebtoken";
 require("dotenv").config({ path: ".env" });
 
 export const signup = async function (req, res, next) {
@@ -16,7 +16,7 @@ export const signup = async function (req, res, next) {
     let { id, email } = account;
     console.log("id", id);
     console.log("email", email);
-    let token = await sign(
+    let token = await jwt.sign(
       {
         id,
         email,
@@ -64,7 +64,7 @@ export const signin = async function (req, res, next) {
     console.log("isMatch", isMatch);
     // if it all matches, log them in
     if (isMatch) {
-      let token = sign(
+      let token = jwt.sign(
         {
           id,
           email,
