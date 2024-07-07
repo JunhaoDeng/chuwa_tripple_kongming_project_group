@@ -86,9 +86,8 @@ export const updateProduct = async function (req, res, next) {
       update_time,
     } = req.body;
 
-    const productId = req.params.product_id; // 假设从路由参数中获取产品的 _id
+    const productId = req.params.product_id;
 
-    // 查找并更新产品
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
       {
@@ -102,16 +101,13 @@ export const updateProduct = async function (req, res, next) {
           update_time,
         },
       },
-      { new: true } // 返回更新后的文档
+      { new: true }
     );
 
     if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
     console.log("updatedProduct", updatedProduct);
-
-    // 如果需要更新用户的信息，可以根据实际需求处理
-    // 例如更新最后修改时间等
 
     return res.status(200).json(updatedProduct);
   } catch (err) {
