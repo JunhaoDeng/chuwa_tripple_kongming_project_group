@@ -2,9 +2,11 @@
 import "../styles/Field.css"
 import { RootState, AppDispatch } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from "react";
 
 type FieldPropType = {
     label: string,
+    ssid?: string, // id for retrieving session storage
     type: string,
     // this check function will check if current input data (which is stored in redux) is valid.
     // if valid, return an empty string
@@ -25,9 +27,21 @@ export default function Field(props: FieldPropType) {
     const error_msg = useSelector( props.errormsgDataSelectorFunc );
 
     const dispatch: AppDispatch = useDispatch();
+    
+    useEffect(() => {
+        if (props.ssid !== undefined) {
+            const data = sessionStorage.getItem(props.ssid);
+            if (data !== null) {
+                dispatch(props.inputDataAction(data));
+            }
+        }
+    }, [dispatch])
 
     const handleInputChange = (value: string) => {
         dispatch(props.inputDataAction(value));
+        if (props.ssid !== undefined) {
+            sessionStorage.setItem(props.ssid, value);
+        }
     };
 
     const handleCheck = () => {
@@ -38,7 +52,8 @@ export default function Field(props: FieldPropType) {
     return (
         <div className="field">
             <div className={ "field_label " + (props.label_bold ? "bold" : "") }>{ props.label }</div>
-            <input className='field_input' type={ props.type } placeholder={ props.placeholder } disabled={ props.input_disabled }
+            <input className='field_input' type={ props.type } placeholder={ props.placeholder } 
+                    disabled={ props.input_disabled } value={input_data}
                     onChange={ (e) => handleInputChange(e.target.value) }
                     onBlur={ handleCheck } style={ { borderColor: error_msg === "" ? "rgb(188, 188, 188)" : "red"} }/>
             <div className='error_msg'>{ error_msg }</div>

@@ -79,12 +79,11 @@ export default function SignUpForm() {
         body: JSON.stringify(signup_data)
       };
       fetch(`${HOST}/api/auth/signup`, options)
-      .then(response => { console.log(response);
-       return response.json();})
+      .then(response => { return response.json();})
       .then(data => console.log(data)) // TODO: other things
       .catch(err => {
         // TODO: redirect to something went wrong page
-        alert("Error: " + err);
+        alert("Signup Error: " + err);
       });
     }
 
@@ -93,17 +92,17 @@ export default function SignUpForm() {
         <div className='form'>
           <div className='close_icon_container'><CloseOutlined /></div>
           <div className='form_title'>Sign up an account</div>
-          <Field label='Email' type='email' checkFunc={ checkEmailFunc } 
+          <Field label='Email' ssid='signup_email' type='email' checkFunc={ checkEmailFunc } 
               placeholder='Enter your email' inputDataSelectorFunc={ email_selector }
               errormsgDataSelectorFunc={ email_errormsg_selector }
               inputDataAction={ signupSetEmail }
               errormsgAction={ signupSetEmailErrormsg }/>
-          <Field label='Password' type='password' checkFunc={ checkPasswordFunc }
+          <Field label='Password' ssid='signup_password' type='password' checkFunc={ checkPasswordFunc }
               placeholder='Enter your password' inputDataSelectorFunc={ pwd_selector }
               errormsgDataSelectorFunc={ pwd_errormsg_selector }
               inputDataAction={ signupSetPassword }
               errormsgAction={ signupSetPasswordErrormsg }/>
-          <CheckboxRow label='This is a vendor account' 
+          <CheckboxRow label='This is a vendor account' ssid='signup_checkbox'
               dataSelectorFunc={ vendorchecked_selector }
               clickAction={ signupSetIsvendor } />
           <button className='form_submit_button' onClick={ handleFormSubmit }>Create Account</button>
