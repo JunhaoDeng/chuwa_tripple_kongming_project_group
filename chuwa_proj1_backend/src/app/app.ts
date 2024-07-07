@@ -1,7 +1,7 @@
 import express = require("express");
 import { Product, connect_db } from "./database/db";
 import authRoutes from "./routes/auth";
-import cors from "cors";
+import cors = require("cors");
 // require("dotenv").config({ path: ".env" });
 import { loginRequired, ensureCorrectUser } from "./middleware/auth";
 import productRoutes from "./routes/product";
