@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg, signin_toggle_show_password, signup_set_email, signup_set_email_errormsg, signup_set_password, signup_set_password_errormsg, update_password_set_email, update_password_set_email_errormsg } from './action';
+import { signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg, 
+    signin_toggle_show_password, signup_set_email, signup_set_email_errormsg, signup_set_isvendor, 
+    signup_set_password, signup_set_password_errormsg, update_password_set_email, 
+    update_password_set_email_errormsg } from './action';
 
 const Slice = createSlice({
     name: "management-chuwa-slice",
@@ -15,8 +18,8 @@ const Slice = createSlice({
             email: "", // email input data
             email_errormsg: "",
             password: "", // password input data
-            password_errormsg: ""
-            // TODO: add checkbox state
+            password_errormsg: "",
+            isvendor_checked: false
         },
         update_password: { // update_password page
             email: "", // email input data
@@ -87,6 +90,7 @@ const Slice = createSlice({
         signupSetEmailErrormsg: signup_set_email_errormsg,
         signupSetPassword: signup_set_password,
         signupSetPasswordErrormsg: signup_set_password_errormsg,
+        signupSetIsvendor: signup_set_isvendor, 
 
         updatePasswordSetEmail: update_password_set_email,
         updatePasswordSetEmailErrormsg: update_password_set_email_errormsg
@@ -99,6 +103,7 @@ export const { signinSetEmail, signinSetEmailErrormsg,
 
         signupSetEmail, signupSetEmailErrormsg,
         signupSetPassword, signupSetPasswordErrormsg,
+        signupSetIsvendor, 
 
         updatePasswordSetEmail, updatePasswordSetEmailErrormsg } = Slice.actions;
 

@@ -39,6 +39,10 @@ export const signup_set_password_errormsg = (state: any, actions: PayloadAction<
     state.signup.password_errormsg = actions.payload;
 }
 
+export const signup_set_isvendor = (state: any, actions: PayloadAction<boolean>) => {
+    state.signup.isvendor_checked = actions.payload;
+}
+
 // Update password
 export const update_password_set_email = (state: any, actions: PayloadAction<string>) => {
     state.update_password.email = actions.payload;
