@@ -1,4 +1,4 @@
-import { Account } from "../database/db";
+import { Account, Cart } from "../database/db";
 // import jwt from "jsonwebtoken";
 const jwt = require("jsonwebtoken");
 // import { sign } from "jsonwebtoken";
@@ -16,6 +16,17 @@ export const signup = async function (req, res, next) {
     let { id, email } = account;
     console.log("id", id);
     console.log("email", email);
+    // 创建一个新的cart对象
+    let cart = await Cart.create({
+      items: [],
+      zip_code: req.body.zip_code || "",
+      discount_cent: req.body.discount_cent || 0,
+      estimated_total_cent: req.body.estimated_total_cent,
+    });
+    console.log("cart", cart);
+    account.cart = cart._id;
+    await account.save();
+
     let token = await jwt.sign(
       {
         id,
