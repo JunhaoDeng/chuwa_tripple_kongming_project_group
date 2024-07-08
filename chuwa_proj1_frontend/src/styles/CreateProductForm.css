@@ -112,6 +112,10 @@
     background-color: rgb(118, 96, 255);
 }
 
+.nodisplay {
+    display: none;
+}
+
 @media (max-width: 44rem) {
     .cpf_container {
         width: auto;

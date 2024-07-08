@@ -1,10 +1,12 @@
-import Layout from './components/layout/index';
+import Layout from './components/Layout/index';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import SignUpForm from './components/SignupForm';
 import CreateProductForm from './components/CreateProductForm';
+import SigninForm from './components/SigninForm';
+import UpdatePwdForm from './components/UpdatePwdForm';
 // import './App.css'
 
 function App() {
@@ -14,8 +16,9 @@ function App() {
         <Layout>
           {/* <ProductsPage /> */}
           {/* <ProductDetailPage /> */}
-          {/* <SignUpForm /> */}
+          {/* <SigninForm /> */}
           <CreateProductForm />
+          {/* <UpdatePwdForm /> */}
         </Layout>
       </Provider>
       
