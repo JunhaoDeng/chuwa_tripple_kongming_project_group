@@ -1,0 +1,151 @@
+.cpf_container {
+    width: 42rem;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cpf_title {
+    font-size: 28px;
+    font-weight: bold;
+    padding-bottom: 1rem;
+    padding-top: 2rem;
+}
+
+.cpf_form {
+    background-color: white;
+    border-radius: 4px;
+    padding: 2rem;
+}
+
+
+.cpf_catprice_row {
+    display: grid;
+    grid-template-rows: 1;
+    grid-template-columns: repeat(2, 2fr);
+}
+
+.cpf_catprice_cell_padright {
+    padding-right: 0.5rem;
+}
+
+.cpf_catprice_cell_padleft {
+    padding-left: 0.5rem;
+}
+
+.cpf_row4 {
+    display: grid;
+    grid-template-columns: 35% 65%;
+
+}
+
+.img_link_anchor {
+    position: relative;
+}
+
+.preview_button {
+    border: none;
+    background-color: rgb(79, 52, 255);
+    color: white;
+    border-radius: 4px;
+    position: absolute;
+    right: 1rem;
+    bottom: 1.5rem;
+    padding: 0.6rem;
+    cursor: pointer;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.preview_button:active {
+    background-color: rgb(118, 96, 255);
+}
+
+.img_preview_row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img_preview_box {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed rgb(205, 205, 205);
+    height: 12rem;
+    border-radius: 4px;
+
+}
+
+.image_preview_prompt {
+    margin-top: 1rem;
+    color: gray;
+}
+
+.fileimageicon {
+    color: rgb(205, 205, 205);
+}
+
+.image_preview {
+    object-fit: contain;
+    height: 100%;
+}
+
+.add_product_button {
+    border: none;
+    background-color: rgb(79, 52, 255);
+    color: white;
+    border-radius: 4px;
+    padding: 0.6rem;
+    cursor: pointer;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.add_product_button_container {
+    margin-top: 1rem;
+}
+
+.add_product_button:active {
+    background-color: rgb(118, 96, 255);
+}
+
+.nodisplay {
+    display: none;
+}
+
+@media (max-width: 44rem) {
+    .cpf_container {
+        width: auto;
+        margin: 1rem;
+    }
+
+    .cpf_title {
+        display: flex;
+        justify-content: center;
+    }
+
+    .cpf_form {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .cpf_catprice_row {
+        display: block;
+    }
+
+    .cpf_catprice_cell_padright {
+        padding-right: 0px;
+    }
+    
+    .cpf_catprice_cell_padleft {
+        padding-left: 0px;
+    }
+
+    .cpf_row4 {
+        display: block;
+    }
+
+}

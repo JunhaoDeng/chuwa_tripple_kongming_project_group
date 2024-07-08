@@ -3,6 +3,10 @@
     margin-bottom: 0.5rem;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .field_input {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -28,6 +32,10 @@
     font-size: 0.85rem;
     margin-top: 0.2rem;
     color: red;
+}
+
+.redborder {
+    border-color: red;
 }
 
 .field {
