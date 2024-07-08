@@ -43,5 +43,6 @@ app.get("/api/products", loginRequired, async function (req, res, next) {
 });
 
 app.listen(3000, () => {
+  console.log(app._router.stack);
   console.log("Example app listening on port 3000!");
 });

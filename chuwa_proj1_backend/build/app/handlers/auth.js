@@ -39,8 +39,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signin = exports.signup = void 0;
 var db_1 = require("../database/db");
 // import jwt from "jsonwebtoken";
-// const jwt = require("jsonwebtoken");
-var jsonwebtoken_1 = require("jsonwebtoken");
+var jwt = require("jsonwebtoken");
+// import { sign } from "jsonwebtoken";
 require("dotenv").config({ path: ".env" });
 var signup = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -61,7 +61,7 @@ var signup = function (req, res, next) {
                     id = account.id, email = account.email;
                     console.log("id", id);
                     console.log("email", email);
-                    return [4 /*yield*/, (0, jsonwebtoken_1.sign)({
+                    return [4 /*yield*/, jwt.sign({
                             id: id,
                             email: email,
                         }, process.env.JWT_SECRET_KEY)];
@@ -117,7 +117,7 @@ var signin = function (req, res, next) {
                     console.log("isMatch", isMatch);
                     // if it all matches, log them in
                     if (isMatch) {
-                        token = (0, jsonwebtoken_1.sign)({
+                        token = jwt.sign({
                             id: id,
                             email: email,
                         }, process.env.JWT_SECRET_KEY);
