@@ -36,6 +36,8 @@ app.get("/api/products", loginRequired, async function (req, res, next) {
         email: true,
         type: true,
       });
+    console.log(messages);
+    
     return res.status(200).json(messages);
   } catch (err) {
     return next(err);
