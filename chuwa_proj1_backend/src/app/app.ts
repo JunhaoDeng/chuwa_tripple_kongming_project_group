@@ -4,7 +4,6 @@ import cors = require('cors');
 import { Product, connect_db } from "./database/db";
 import authRoutes from "./routes/auth";
 import cartRoutes from "./routes/cart";
-import cors = require("cors");
 
 // require("dotenv").config({ path: ".env" });
 import { loginRequired, ensureCorrectUser } from "./middleware/auth";
