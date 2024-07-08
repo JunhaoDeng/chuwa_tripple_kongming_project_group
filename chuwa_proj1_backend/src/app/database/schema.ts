@@ -118,7 +118,7 @@ const CartSchema: Schema = new Schema({
   },
   estimated_total_cent: {
     type: Number,
-    required: true,
+    // required: true,
   },
 });
 
