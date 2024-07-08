@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import SignUpForm from './components/SignupForm';
 import CreateProductForm from './components/CreateProductForm';
 import SigninForm from './components/SigninForm';
+import UpdatePwdForm from './components/UpdatePwdForm';
 // import './App.css'
 
 function App() {
@@ -15,8 +16,9 @@ function App() {
         <Layout>
           {/* <ProductsPage /> */}
           {/* <ProductDetailPage /> */}
-          <SigninForm />
-          {/* <CreateProductForm /> */}
+          {/* <SigninForm /> */}
+          <CreateProductForm />
+          {/* <UpdatePwdForm /> */}
         </Layout>
       </Provider>
       

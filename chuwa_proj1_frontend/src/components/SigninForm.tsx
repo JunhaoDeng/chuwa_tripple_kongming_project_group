@@ -33,8 +33,8 @@ export default function SigninForm() {
     
     const passwordSelector = (state: RootState) => state.signin.password;
   
-    let email: string = useSelector(emailSelector);
-    let password: string = useSelector(passwordSelector);
+    const email: string = useSelector(emailSelector);
+    const password: string = useSelector(passwordSelector);
 
     const handleFormSubmit = () => {
       const signinData: SigninDataType = {

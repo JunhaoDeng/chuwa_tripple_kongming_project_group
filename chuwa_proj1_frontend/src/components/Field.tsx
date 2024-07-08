@@ -39,6 +39,8 @@ export default function Field(props: FieldPropType) {
 
     const handleInputChange = (value: string) => {
         dispatch(props.inputDataAction(value));
+        // console.log(input_data);
+                
         if (props.ssid !== undefined) {
             sessionStorage.setItem(props.ssid, value);
         }
