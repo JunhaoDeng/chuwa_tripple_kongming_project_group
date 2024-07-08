@@ -18,7 +18,8 @@ type FieldPropType = {
     inputDataAction: any,
     errormsgAction: any,
     label_bold?: boolean,
-    input_disabled?: boolean 
+    input_disabled?: boolean,
+    additional_styles?: any
 }
 
 export default function Field(props: FieldPropType) {
@@ -54,10 +55,10 @@ export default function Field(props: FieldPropType) {
     return (
         <div className="field">
             <div className={ "field_label " + (props.label_bold ? "bold" : "") }>{ props.label }</div>
-            <input className='field_input' type={ props.type } placeholder={ props.placeholder } 
+            <input className={'field_input' + (error_msg === "" ? "" : " redborder")} type={ props.type } placeholder={ props.placeholder } 
                     disabled={ props.input_disabled } value={input_data}
                     onChange={ (e) => handleInputChange(e.target.value) }
-                    onBlur={ handleCheck } style={ { borderColor: error_msg === "" ? "rgb(188, 188, 188)" : "red"} }/>
+                    onBlur={ handleCheck } style={ props.additional_styles }/>
             <div className='error_msg'>{ error_msg }</div>
         </div>
     )

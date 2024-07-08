@@ -3,9 +3,9 @@ import "../styles/CreateProductForm.css"
 import AreaField from "./AreaField";
 import DropdownField from "./DropdownField";
 import Field from "./Field"
-import { FileImageOutlined } from "@ant-design/icons";
+import { FileExclamationOutlined, FileImageOutlined } from "@ant-design/icons";
 import { AppDispatch, RootState } from "../redux/store";
-import { createProductSetCategory, createProductSetCategoryErrormsg, createProductSetDescription, createProductSetDescriptionErrormsg, createProductSetImageLink, createProductSetImageLinkErrormsg, createProductSetImageLinkPreview, createProductSetName, createProductSetNameErrormsg, createProductSetPrice, createProductSetPriceErrormsg, createProductSetQuantity, createProductSetQuantityErrormsg } from "../redux/slice";
+import { createProductSetCategory, createProductSetCategoryErrormsg, createProductSetDescription, createProductSetDescriptionErrormsg, createProductSetImageLink, createProductSetImageLinkErrormsg, createProductSetImageLinkPreview, createProductSetImageLinkPreviewError, createProductSetName, createProductSetNameErrormsg, createProductSetPrice, createProductSetPriceErrormsg, createProductSetQuantity, createProductSetQuantityErrormsg } from "../redux/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode, JwtPayload } from "jwt-decode"
 import { HOST } from "../config";
@@ -81,7 +81,7 @@ export default function CreateProductForm() {
     const quantity = useSelector(quantitySelector);
     const imageLink = useSelector(imageLinkSelector);
     const imageLinkPreview = useSelector(imageLinkPreviewSelector);
-
+    const imageLinkPreviewError: boolean = useSelector((state: RootState) => state.create_product.image_link_preview_error);
     const dispatch: AppDispatch = useDispatch();
 
     const handle_preview = () => {
@@ -123,10 +123,17 @@ export default function CreateProductForm() {
         })
         .catch(err => {
             alert(err);
-        }) 
-        
-        
+        });
     }
+
+    const handleImageLoadError = () => {
+        dispatch(createProductSetImageLinkPreviewError(true));
+    }
+
+    const handleImageLoaded = () => {
+        dispatch(createProductSetImageLinkPreviewError(false));
+    }
+
     
 
 
@@ -190,7 +197,8 @@ export default function CreateProductForm() {
                             errormsgDataSelectorFunc={ (state: RootState) => state.create_product.image_link_errormsg}
                             inputDataAction={ createProductSetImageLink }
                             errormsgAction={ createProductSetImageLinkErrormsg } 
-                            label_bold={ true }/>
+                            label_bold={ true }
+                            additional_styles={ {paddingRight: "6.5rem"} }/>
                         <button className="preview_button" onClick={ handle_preview }>Preview</button>
                     </div>
                 </div>
@@ -198,12 +206,26 @@ export default function CreateProductForm() {
             <div className="img_preview_row">
                 <div className="img_preview_box">
                     {
-                        imageLinkPreview.length === 0 ? 
+                        imageLinkPreview.length === 0 && 
                         <>
                         <FileImageOutlined className="fileimageicon"/>
                         <div className="image_preview_prompt">Image preview!</div>
-                        </> :
-                        <img src={ imageLinkPreview } alt="Image not found" className="image_preview"/>
+                        </>
+                    }
+                    {
+                        imageLinkPreview.length !== 0 &&
+                        <img src={ imageLinkPreview } alt="Image not found" 
+                            className={"image_preview" + (imageLinkPreviewError ? " nodisplay" : "")}
+                            onError={ handleImageLoadError }
+                            onLoad={ handleImageLoaded }
+                            />
+                    }
+                    {
+                        imageLinkPreview.length !== 0 && imageLinkPreviewError &&
+                        <>
+                        <FileExclamationOutlined className="fileimageicon"/>
+                        <div className="image_preview_prompt">Cannot load image</div>
+                        </>
                     }
                 </div>
             </div>
