@@ -98,7 +98,7 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
             }}
         >
             <Space.Compact block style={{ width: "5rem"}}>
-                <Button style={{ width: '25%' }} size='small' icon={<MinusOutlined onClick={() => handleAmountChange(count - 1, false)} />}></Button>
+                <Button style={{ width: '25%' }} size='small' icon={<MinusOutlined onClick={() => handleAmountChange(count - 1, false)} />} disabled={count === 0}></Button>
                 <InputNumber style={{ width: '50%' }} className="quantityInput" size="small" controls={false} defaultValue={count} value={count}
                  onChange={(val) => handleInputChange(val)} onBlur={ handleInputBlur }/>
                 <Button style={{ width: '25%' }} size='small' icon={<PlusOutlined onClick={() => handleAmountChange(count + 1, true)} />}></Button>

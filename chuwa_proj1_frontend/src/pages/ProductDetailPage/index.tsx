@@ -182,7 +182,7 @@ const ProductDetailPage: React.FC = () => {
                             {num_added === 0 && <Button className={btnStyles.uniformPrimaryBtn} style={{ flex: '1 1 0' }} type="primary" onClick={ handleAddProduct }>Add To Cart</Button>}
                             {num_added !== 0 && <QuantitiController quantitySelectorFunc={ quantitySelector } 
                                     productIdSelectorFunc={productIdSelector} setQuantityAction={ productDetailAsyncSetNumAdded } />}
-                            <Button style={{ flex: '1 1 0' }} onClick={handleEditClicked }>Edit</Button>
+                            <Button style={{ flex: '1 1 0' }} size="small" onClick={handleEditClicked }>Edit</Button>
                         </Flex>
                     </Flex>
                 </Flex>
