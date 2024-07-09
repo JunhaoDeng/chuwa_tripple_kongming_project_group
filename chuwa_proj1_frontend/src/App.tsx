@@ -9,6 +9,7 @@ import UpdatePwdForm from "./components/UpdatePwdForm";
 import CreateProductForm from "./components/CreateProductForm";
 import ErrorPage from "./components/ErrorPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import EmailNotification from "./components/EmailNotification";
 // import './App.css'
 
 function App() {
@@ -16,12 +17,12 @@ function App() {
     <div className="app">
       <Provider store={store}>
         <Layout>
-          {/* <BrowserRouter>
+          <BrowserRouter>
             <Routes>
               <Route path="/signin" element={<SigninForm />} />
               <Route path="/signup" element={<SignUpForm />} />
               <Route path="/update-password" element={<UpdatePwdForm />} />
-              <Route path="/update-success" element={<SigninForm />} />
+              <Route path="/update-success" element={<EmailNotification />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/products/create" element={<CreateProductForm />} />
               <Route
@@ -34,8 +35,8 @@ function App() {
               />
               <Route path="/error" element={<ErrorPage />} />
             </Routes>
-          </BrowserRouter> */}
-          <ProductsPage />
+          </BrowserRouter>
+          {/* <ProductsPage /> */}
           {/* <ProductDetailPage /> */}
           {/* <SignUpForm /> */}
           {/* <SigninForm /> */}
