@@ -16,7 +16,7 @@ function App() {
     <div className="app">
       <Provider store={store}>
         <Layout>
-          {/* <BrowserRouter>
+          <BrowserRouter>
             <Routes>
               <Route path="/signin" element={<SigninForm />} />
               <Route path="/signup" element={<SignUpForm />} />
@@ -34,8 +34,8 @@ function App() {
               />
               <Route path="/error" element={<ErrorPage />} />
             </Routes>
-          </BrowserRouter> */}
-          <ProductsPage />
+          </BrowserRouter>
+          {/* <ProductsPage /> */}
           {/* <ProductDetailPage /> */}
           {/* <SignUpForm /> */}
           {/* <SigninForm /> */}
