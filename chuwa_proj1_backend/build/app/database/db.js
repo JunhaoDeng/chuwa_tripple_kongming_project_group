@@ -11,14 +11,14 @@ var pwd = process.env.MONGODB_ATLAS_PWD || "";
 // console.log(pwd);
 var uri = "mongodb+srv://degjnd:".concat(encodeURIComponent(pwd), "@cluster0.hpelqzn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 // const uri: string = process.env.MONGODB_URI;
-mongoose_1.default
-    .connect(uri)
-    .then(function () {
-    console.log("Connected");
-})
-    .catch(function (err) {
-    console.log(err);
-});
+// mongoose
+//   .connect(uri)
+//   .then(() => {
+//     console.log("Connected");
+//   })
+//   .catch((err: Error) => {
+//     console.log(err);
+//   });
 // Import schemas
 var schema_1 = require("./schema");
 Object.defineProperty(exports, "Account", { enumerable: true, get: function () { return schema_1.Account; } });

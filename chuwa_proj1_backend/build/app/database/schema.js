@@ -143,11 +143,11 @@ var ProductSchema = new mongoose_1.Schema({
     },
     create_time: {
         type: Date,
-        required: true,
+        // required: true,
     },
     update_time: {
         type: Date,
-        required: true,
+        // required: true,
     },
 });
 var CartSchema = new mongoose_1.Schema({

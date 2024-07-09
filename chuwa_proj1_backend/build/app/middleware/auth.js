@@ -36,49 +36,76 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express = require("express");
-var db_1 = require("./database/db");
-var auth_1 = require("./routes/auth");
-var cors = require("cors");
-// require("dotenv").config({ path: ".env" });
-var auth_2 = require("./middleware/auth");
-var product_1 = require("./routes/product");
-var app = express();
-app.use(express.json());
-app.use(cors());
-console.log("connecting to db");
-(0, db_1.connect_db)();
-console.log("connected to db");
-app.get("/", function (req, res) {
-    res.send("Hello World!21321dsfsd");
-});
-app.use("/api/auth", auth_1.default);
-app.use("/api/users/:id/product", auth_2.loginRequired, auth_2.ensureCorrectUser, product_1.default);
-app.get("/api/products", auth_2.loginRequired, function (req, res, next) {
+exports.ensureCorrectUser = exports.loginRequired = void 0;
+var jwt = require("jsonwebtoken");
+// make sure the user is logged in - Authentication
+var loginRequired = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var messages, err_1;
+        var token, decoded, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    console.log("in get products");
-                    return [4 /*yield*/, db_1.Product.find()
-                            .sort({ createdAt: "desc" })
-                            .populate("created_by", {
-                            email: true,
-                            type: true,
-                        })];
+                    token = req.headers.authorization.split(" ")[1];
+                    console.log("token", token);
+                    return [4 /*yield*/, jwt.verify(token, process.env.JWT_SECRET_KEY)];
                 case 1:
-                    messages = _a.sent();
-                    return [2 /*return*/, res.status(200).json(messages)];
+                    decoded = _a.sent();
+                    console.log("decoded", decoded);
+                    if (decoded) {
+                        return [2 /*return*/, next()];
+                    }
+                    else {
+                        return [2 /*return*/, next({
+                                status: 401,
+                                message: "Please log in first",
+                            })];
+                    }
+                    return [3 /*break*/, 3];
                 case 2:
                     err_1 = _a.sent();
-                    return [2 /*return*/, next(err_1)];
+                    return [2 /*return*/, next({
+                            status: 401,
+                            message: "Please log in first",
+                        })];
                 case 3: return [2 /*return*/];
             }
         });
     });
-});
-app.listen(3000, function () {
-    console.log("Example app listening on port 3000!");
-});
+};
+exports.loginRequired = loginRequired;
+// make sure we get the correct user - Authorization
+var ensureCorrectUser = function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var token, decoded, err_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    console.log(req.headers.authorization);
+                    token = req.headers.authorization.split(" ")[1];
+                    return [4 /*yield*/, jwt.verify(token, process.env.JWT_SECRET_KEY)];
+                case 1:
+                    decoded = _a.sent();
+                    if (decoded && decoded.id === req.params.id) {
+                        return [2 /*return*/, next()];
+                    }
+                    else {
+                        return [2 /*return*/, next({
+                                status: 401,
+                                message: "Unauthorized",
+                            })];
+                    }
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_2 = _a.sent();
+                    return [2 /*return*/, next({
+                            status: 401,
+                            message: "Unauthorized",
+                        })];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+};
+exports.ensureCorrectUser = ensureCorrectUser;
