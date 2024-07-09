@@ -4,11 +4,13 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode"
 import { HOST } from "../config";
 import {
-    create_product_set_category, create_product_set_category_errormsg, create_product_set_description, create_product_set_description_errormsg, create_product_set_image_link, create_product_set_image_link_errormsg, create_product_set_image_link_preview, create_product_set_image_link_preview_error, create_product_set_name, create_product_set_name_errormsg, create_product_set_price, create_product_set_price_errormsg, create_product_set_quantity, create_product_set_quantity_errormsg, product2_set_created_by, product_detail_set_category, product_detail_set_description, product_detail_set_id, product_detail_set_image_link, product_detail_set_name, product_detail_set_num_added, product_detail_set_price, products_set_one_num_added, products_set_page_selected, products_set_product_list, products_set_sortby, PSONAActionType, PSPLActionDataType, signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg,
+    create_product_set_category, create_product_set_category_errormsg, create_product_set_description, create_product_set_description_errormsg, create_product_set_image_link, create_product_set_image_link_errormsg, create_product_set_image_link_preview, create_product_set_image_link_preview_error, create_product_set_name, create_product_set_name_errormsg, create_product_set_price, create_product_set_price_errormsg, create_product_set_quantity, create_product_set_quantity_errormsg, product2_set_created_by, product_detail_set_category, product_detail_set_description, product_detail_set_id, product_detail_set_image_link, product_detail_set_name, product_detail_set_num_added, product_detail_set_price, products_set_one_num_added, products_set_page_selected, products_set_product_list, PSONAActionType, PSPLActionDataType, signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg,
     signin_toggle_show_password, signup_set_email, signup_set_email_errormsg, signup_set_isvendor,
     signup_set_password, signup_set_password_errormsg, update_password_set_email,
     update_password_set_email_errormsg,
-    add_or_update_cart_item
+    add_or_update_cart_item,
+    products_sort_product_list_ltoh,
+    products_sort_product_list_htol
 } from './action';
 
 export type ASThunkDatatype = {
@@ -245,8 +247,9 @@ const Slice = createSlice({
         createProductSetImageLinkPreviewError: create_product_set_image_link_preview_error,
 
         productsSetProductList: products_set_product_list,
-        productsSetSortby: products_set_sortby,
         productsSetPageSelected: products_set_page_selected,
+        productsSortProductListLtoh: products_sort_product_list_ltoh,
+        productsSortProductListHtol: products_sort_product_list_htol,
 
 
         productDetailSetId: product_detail_set_id,
@@ -422,8 +425,9 @@ export const { signinSetEmail, signinSetEmailErrormsg,
     createProductSetImageLinkPreview,
     createProductSetImageLinkPreviewError,
 
-    productsSetProductList, productsSetSortby,
-    productsSetPageSelected,
+    productsSetProductList,
+    productsSetPageSelected, productsSortProductListLtoh,
+    productsSortProductListHtol,
 
     productDetailSetId, productDetailSetName,
     productDetailSetPrice, productDetailSetNumAdded,

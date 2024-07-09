@@ -9,7 +9,7 @@ import responsiveStyles from '../../styles/Adjustor.module.css';
 import ProductsBoard from './ProductsBoard';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { AsyncSetProductDataType, productsAsyncSetProductList } from '../../redux/slice';
+import { AsyncSetProductDataType, productsAsyncSetProductList, productsSortProductListHtol, productsSortProductListLtoh } from '../../redux/slice';
 import { HOST } from '../../config';
 import { jwtDecode } from 'jwt-decode';
 
@@ -31,7 +31,7 @@ const ProductsPage: React.FC = () => {
         setCurrent(page);
     };
 
-    const handleSelectChange = (value) => {
+    const handleSelectChange = (value: string) => {
         console.log("Selected:", value);
         switch(value) {
             case '0': {
@@ -56,7 +56,16 @@ const ProductsPage: React.FC = () => {
                     options: options
                 };
 
-                dispatch(productsAsyncSetProductList(indata))
+                dispatch(productsAsyncSetProductList(indata));
+                break;
+            }
+            case '1': {
+                dispatch(productsSortProductListLtoh());
+                break;
+            }
+            case '2': {
+                dispatch(productsSortProductListHtol());
+                break;
             }
         }
     }
@@ -68,7 +77,7 @@ const ProductsPage: React.FC = () => {
                 <h1 className={styles.title}>Products</h1>
                 <div className={styles.opWrapper}>
                     <Select
-                        defaultValue="1"
+                        defaultValue="0"
                         style={{ width: 'maxContent' }}
                         // onChange={handleChange}
                         options={[
