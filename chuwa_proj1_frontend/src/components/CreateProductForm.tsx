@@ -113,7 +113,6 @@ export default function CreateProductForm() {
         try {
             decoded = jwtDecode(sessionStorage.getItem("token") as string);
         } catch(err) {
-            alert("Token invalid or missing");
             return;
         }
         fetch(`${HOST}/api/users/${decoded.id}/product`, options)
@@ -147,7 +146,9 @@ export default function CreateProductForm() {
                 errormsgDataSelectorFunc={ (state: RootState) => state.create_product.name_errormsg}
                 inputDataAction={ createProductSetName }
                 errormsgAction={ createProductSetNameErrormsg }
-                label_bold={true} />
+                label_bold={true} 
+                onInputChange={() => {}}    
+            />
             <AreaField label="Product Description" ssid="cp_product_description" 
                 checkFunc={ noOp } 
                 placeholder="Enter product description" 
@@ -174,7 +175,9 @@ export default function CreateProductForm() {
                     errormsgDataSelectorFunc={ (state: RootState) => state.create_product.price_errormsg }
                     inputDataAction={ createProductSetPrice }
                     errormsgAction={ createProductSetPriceErrormsg }
-                    label_bold={true}/>
+                    label_bold={true}
+                    onInputChange={() => {}} 
+                    />
                 </div>
             </div>
             <div className="cpf_row4">
@@ -186,7 +189,8 @@ export default function CreateProductForm() {
                         errormsgDataSelectorFunc={ (state: RootState) => state.create_product.quantity_errormsg }
                         inputDataAction={ createProductSetQuantity }
                         errormsgAction={ createProductSetQuantityErrormsg }
-                        label_bold={ true }/>
+                        label_bold={ true }
+                        onInputChange={() => {}} />
                 </div>
                 <div className="cpf_catprice_cell_padleft">
                     <div className="img_link_anchor">
@@ -198,7 +202,8 @@ export default function CreateProductForm() {
                             inputDataAction={ createProductSetImageLink }
                             errormsgAction={ createProductSetImageLinkErrormsg } 
                             label_bold={ true }
-                            additional_styles={ {paddingRight: "6.5rem"} }/>
+                            additional_styles={ {paddingRight: "6.5rem"} }
+                            onInputChange={() => {}} />
                         <button className="preview_button" onClick={ handle_preview }>Preview</button>
                     </div>
                 </div>

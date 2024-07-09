@@ -22,7 +22,6 @@ const ProductsBoard = (props: ProductBoardPropsType) => {
         try {
             decoded = jwtDecode(sessionStorage.getItem("token") as string);
         } catch(err) {
-            alert("Token invalid or missing");
             return;
         }
 

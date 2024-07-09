@@ -11,6 +11,7 @@ import { HOST } from '../../config';
 import { Root } from 'react-dom/client';
 import { useEffect, useState } from 'react';
 import create from '@ant-design/icons/lib/components/IconFont';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -35,13 +36,14 @@ const ItemCard = (props: ItemCardPropsType) => {
   const productIdSelector = (state: RootState) => state.products.product_list[props.index].id;
 
   const dispatch: AppDispatch = useDispatch();
+
+  const navigate: NavigateFunction = useNavigate();
   
   useEffect(() => {
     let decoded: any = null;
     try {
         decoded = jwtDecode(sessionStorage.getItem("token") as string);
     } catch(err) {
-        alert("Token invalid or missing");
         return;
     }
     setTokenDec(decoded);
@@ -71,12 +73,16 @@ const ItemCard = (props: ItemCardPropsType) => {
     };
 
     dispatch(productAsyncSetNumAdded(thunkdata));
-}
+  }
+
+  const handleItemClicked = () => {
+    navigate(`/products/${product.id}/detail`);
+  }
   return <Card
     className={styles.productCard}
     hoverable
     styles={{body: {padding: '0.5rem'}}}
-    cover={<img alt="example" src={ product.image_link } />}
+    cover={<img alt="example" src={ product.image_link } onClick={ handleItemClicked }/>}
     actions={[
       <Flex gap="small" justify="space-around" wrap>
         { product.num_added === 0 && <Button className={btnStyles.uniformPrimaryBtn} style={{flexGrow: 1}} size='small'
