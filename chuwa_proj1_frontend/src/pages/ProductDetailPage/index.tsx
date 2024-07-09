@@ -64,6 +64,12 @@ const ProductDetailPage: React.FC = () => {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            return fetch(`${HOST}/api/users/${decoded.id}/cart`);
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            
         })
     }, []);
     return (
