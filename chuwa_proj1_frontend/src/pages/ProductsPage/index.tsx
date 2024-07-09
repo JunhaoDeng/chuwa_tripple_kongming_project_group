@@ -12,6 +12,7 @@ import { AppDispatch, RootState } from '../../redux/store';
 import { AsyncSetProductDataType, productsAsyncSetProductList, productsSortProductListHtol, productsSortProductListLtoh } from '../../redux/slice';
 import { HOST } from '../../config';
 import { jwtDecode } from 'jwt-decode';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const ProductsPage: React.FC = () => {
     // const setSortBy = (val: String) => {
@@ -22,6 +23,7 @@ const ProductsPage: React.FC = () => {
     // Pagination
     const [current, setCurrent] = useState(1);
     
+    const navigate: NavigateFunction = useNavigate()
     const product_list: any = useSelector((state: RootState) => state.products.product_list);
     const dispatch: AppDispatch= useDispatch();
     
@@ -30,6 +32,10 @@ const ProductsPage: React.FC = () => {
         console.log(page);
         setCurrent(page);
     };
+
+    const handleAddProductButtonClick = () => {
+        navigate("/products/create")
+    }
 
     const handleSelectChange = (value: string) => {
         console.log("Selected:", value);
@@ -88,7 +94,7 @@ const ProductsPage: React.FC = () => {
                         ]}
                         onChange={ handleSelectChange }
                     />
-                    <Button className={btnStyles.uniformPrimaryBtn}>Add Product</Button>
+                    <Button className={btnStyles.uniformPrimaryBtn} onClick={ handleAddProductButtonClick }>Add Product</Button>
                 </div>
             </Flex>
             <ProductsBoard current_page={current}/>
