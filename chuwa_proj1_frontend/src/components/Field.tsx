@@ -1,43 +1,64 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux'
 import "../styles/Field.css"
+import { RootState, AppDispatch } from '../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from "react";
 
 type FieldPropType = {
     label: string,
+    ssid?: string, // id for retrieving session storage
     type: string,
     // this check function will check if current input data (which is stored in redux) is valid.
     // if valid, return an empty string
     // if invalid, return error message
     checkFunc: (data: string) => string, 
     placeholder: string,
-    inputDataSelectorFunc: (state: any) => any
-    label_bold?: boolean
-    input_disabled?: boolean 
+    inputDataSelectorFunc: (state: RootState) => any,
+    errormsgDataSelectorFunc: (state: RootState) => any,
+    inputDataAction: any,
+    errormsgAction: any,
+    label_bold?: boolean,
+    input_disabled?: boolean,
+    additional_styles?: any
 }
 
 export default function Field(props: FieldPropType) {
 
-    // const input_data = useSelector( props.inputDataSelectorFunc );
-    const [input_data, setInputData] = useState<string>(""); // test
-    const [error_msg, setErrorMsg] = useState<string>("");
+    const input_data = useSelector( props.inputDataSelectorFunc );
+    const error_msg = useSelector( props.errormsgDataSelectorFunc );
+
+    const dispatch: AppDispatch = useDispatch();
+    
+    useEffect(() => {
+        if (props.ssid !== undefined) {
+            const data = sessionStorage.getItem(props.ssid);
+            if (data !== null) {
+                dispatch(props.inputDataAction(data));
+            }
+        }
+    }, [dispatch])
 
     const handleInputChange = (value: string) => {
-        // useDispatch(...)
-        setInputData(value); // test
+        dispatch(props.inputDataAction(value));
+        // console.log(input_data);
+                
+        if (props.ssid !== undefined) {
+            sessionStorage.setItem(props.ssid, value);
+        }
     };
 
     const handleCheck = () => {
         const msg: string = props.checkFunc(input_data);
-        setErrorMsg(msg);
+        dispatch(props.errormsgAction(msg));
     }
 
     return (
         <div className="field">
             <div className={ "field_label " + (props.label_bold ? "bold" : "") }>{ props.label }</div>
-            <input className='field_input' type={ props.type } placeholder={ props.placeholder } disabled={ props.input_disabled }
+            <input className={'field_input' + (error_msg === "" ? "" : " redborder")} type={ props.type } placeholder={ props.placeholder } 
+                    disabled={ props.input_disabled } value={input_data}
                     onChange={ (e) => handleInputChange(e.target.value) }
-                    onBlur={ handleCheck } style={ { borderColor: error_msg === "" ? "rgb(188, 188, 188)" : "red"} }/>
+                    onBlur={ handleCheck } style={ props.additional_styles }/>
             <div className='error_msg'>{ error_msg }</div>
         </div>
     )

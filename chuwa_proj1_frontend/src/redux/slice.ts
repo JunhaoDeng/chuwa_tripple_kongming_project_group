@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signin_set_email, signin_set_password, signin_toggle_show_password, signup_set_email, signup_set_password, update_password_set_email } from './action';
+import { create_product_set_category, create_product_set_category_errormsg, create_product_set_description, create_product_set_description_errormsg, create_product_set_image_link, create_product_set_image_link_errormsg, create_product_set_image_link_preview, create_product_set_image_link_preview_error, create_product_set_name, create_product_set_name_errormsg, create_product_set_price, create_product_set_price_errormsg, create_product_set_quantity, create_product_set_quantity_errormsg, signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg, 
+    signin_toggle_show_password, signup_set_email, signup_set_email_errormsg, signup_set_isvendor, 
+    signup_set_password, signup_set_password_errormsg, update_password_set_email, 
+    update_password_set_email_errormsg } from './action';
 
 const Slice = createSlice({
     name: "management-chuwa-slice",
@@ -15,7 +18,8 @@ const Slice = createSlice({
             email: "", // email input data
             email_errormsg: "",
             password: "", // password input data
-            password_errormsg: ""
+            password_errormsg: "",
+            isvendor_checked: false
         },
         update_password: { // update_password page
             email: "", // email input data
@@ -33,7 +37,7 @@ const Slice = createSlice({
             quantity: null, // quantity input data. Should be number
             quantity_errormsg: "",
             image_link: "", // image link input data. 
-
+            image_link_errormsg: "",
             // current image link. This is what shown in image preview and is updated after user clicks "update"
             image_link_preview: "",
             // set to true if preview image failed to load
@@ -76,14 +80,57 @@ const Slice = createSlice({
         }
     },
     reducers: {
-        signin_set_email: signin_set_email,
-        signin_set_password: signin_set_password,
-        signin_toggle_show_password: signin_toggle_show_password,
-        signup_set_email: signup_set_email,
-        signup_set_password: signup_set_password,
-        update_password_set_email: update_password_set_email
+        signinSetEmail: signin_set_email,
+        signinSetEmailErrormsg: signin_set_email_errormsg,
+        signinSetPassword: signin_set_password,
+        signinSetPasswordErrormsg: signin_set_password_errormsg,
+        signinToggleShowPassword: signin_toggle_show_password,
+
+        signupSetEmail: signup_set_email,
+        signupSetEmailErrormsg: signup_set_email_errormsg,
+        signupSetPassword: signup_set_password,
+        signupSetPasswordErrormsg: signup_set_password_errormsg,
+        signupSetIsvendor: signup_set_isvendor, 
+
+        updatePasswordSetEmail: update_password_set_email,
+        updatePasswordSetEmailErrormsg: update_password_set_email_errormsg,
+
+        createProductSetName: create_product_set_name,
+        createProductSetNameErrormsg: create_product_set_name_errormsg,
+        createProductSetDescription: create_product_set_description,
+        createProductSetDescriptionErrormsg: create_product_set_description_errormsg,
+        createProductSetCategory: create_product_set_category,
+        createProductSetCategoryErrormsg: create_product_set_category_errormsg,
+        createProductSetPrice: create_product_set_price,
+        createProductSetPriceErrormsg: create_product_set_price_errormsg,
+        createProductSetQuantity: create_product_set_quantity,
+        createProductSetQuantityErrormsg: create_product_set_quantity_errormsg,
+        createProductSetImageLink: create_product_set_image_link,
+        createProductSetImageLinkErrormsg: create_product_set_image_link_errormsg,
+        createProductSetImageLinkPreview: create_product_set_image_link_preview,
+        createProductSetImageLinkPreviewError: create_product_set_image_link_preview_error
+
     }
 });
 
-// export const {} = Slice.actions;
+export const { signinSetEmail, signinSetEmailErrormsg, 
+        signinSetPassword, signinSetPasswordErrormsg, 
+        signinToggleShowPassword, 
+
+        signupSetEmail, signupSetEmailErrormsg,
+        signupSetPassword, signupSetPasswordErrormsg,
+        signupSetIsvendor, 
+
+        updatePasswordSetEmail, updatePasswordSetEmailErrormsg,
+
+        createProductSetName, createProductSetNameErrormsg, 
+        createProductSetDescription, createProductSetDescriptionErrormsg, 
+        createProductSetCategory, createProductSetCategoryErrormsg,
+        createProductSetPrice, createProductSetPriceErrormsg,
+        createProductSetQuantity, createProductSetQuantityErrormsg,
+        createProductSetImageLink, createProductSetImageLinkErrormsg, 
+        createProductSetImageLinkPreview,
+        createProductSetImageLinkPreviewError
+    } = Slice.actions;
+
 export default Slice.reducer
