@@ -2,15 +2,15 @@ import { Drawer, Button, Input } from 'antd';
 import type { SearchProps } from 'antd/es/input/Search';
 import { UserOutlined, ShoppingCartOutlined, CloseOutlined } from '@ant-design/icons';
 import styles from '../../styles/Layout.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CartDrawer from '../Cart';
+import { jwtDecode } from 'jwt-decode';
 
 
 const { Search } = Input;
 const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value);
 
 const Header: React.FC = () => {
-
     const [open, setOpenCart] = useState(false);
     const showDrawer = () => {
         setOpenCart(true);
@@ -20,6 +20,18 @@ const Header: React.FC = () => {
     };
     const num = 3;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [tokenDec, setTokenDec] = useState<any>(null);
+
+    useEffect(() => {
+        let decoded: any = null;
+        try {
+            decoded = jwtDecode(sessionStorage.getItem("token") as string);
+        } catch(err) {
+            console.log("token invalid");
+        }
+        setTokenDec(decoded);
+    }, [])
     return (
         <>
             <header className={styles.header}>
@@ -32,7 +44,10 @@ const Header: React.FC = () => {
                 <div className={styles.userFieldWrapper}>
                     <div className={styles.userWrapper}>
                         <UserOutlined className={styles.userIcon} />
-                        <a className={styles.signLink} href="#">Sign In</a>
+                        {tokenDec !== null ?
+                        <span className={styles.signLink}>{tokenDec.email}</span>:
+                        <a className={styles.signLink} href="/signin">Sign In</a>}
+
                     </div>
                     <div className={styles.cartWrapper}>
                         <Button className={styles.cartButton} onClick={showDrawer} icon={<ShoppingCartOutlined className={styles.cartIcon} />} />

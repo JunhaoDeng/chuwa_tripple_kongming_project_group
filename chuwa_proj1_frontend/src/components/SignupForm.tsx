@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HOST } from "../config";
 import { useNavigate } from "react-router-dom";
 import { signupClearEmail, signupClearPassword } from "../redux/slice";
+import CloseIcon from "./CloseIcon";
 
 // a's will be replaced by Link element in the future
 
@@ -121,9 +122,7 @@ export default function SignUpForm() {
   return (
     <div className="form_container">
       <div className="form">
-        <div className="close_icon_container">
-          <CloseOutlined />
-        </div>
+        <CloseIcon />
         <div className="form_title">Sign up an account</div>
         <Field
           label="Email"

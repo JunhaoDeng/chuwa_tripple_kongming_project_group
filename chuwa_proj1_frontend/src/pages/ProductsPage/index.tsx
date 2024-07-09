@@ -23,12 +23,43 @@ const ProductsPage: React.FC = () => {
     const [current, setCurrent] = useState(1);
     
     const product_list: any = useSelector((state: RootState) => state.products.product_list);
-
+    const dispatch: AppDispatch= useDispatch();
+    
     const dummy = 6.8;
     const onChange: PaginationProps['onChange'] = (page) => {
         console.log(page);
         setCurrent(page);
     };
+
+    const handleSelectChange = (value) => {
+        console.log("Selected:", value);
+        switch(value) {
+            case '0': {
+                let decoded: any = null;
+                try {
+                    decoded = jwtDecode(sessionStorage.getItem("token") as string);
+                } catch(err) {
+                    alert("Token invalid or missing");
+                    return;
+                }
+
+                const options = {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+
+                const indata: AsyncSetProductDataType = {
+                    products_url: `${HOST}/api/products`,
+                    cart_url: `${HOST}/api/users/${decoded.id}/cart`,
+                    options: options
+                };
+
+                dispatch(productsAsyncSetProductList(indata))
+            }
+        }
+    }
 
     // component
     return (
@@ -46,6 +77,7 @@ const ProductsPage: React.FC = () => {
                             { value: '1', label: 'Price: low to high' },
                             { value: '2', label: 'Price: high to low' },
                         ]}
+                        onChange={ handleSelectChange }
                     />
                     <Button className={btnStyles.uniformPrimaryBtn}>Add Product</Button>
                 </div>

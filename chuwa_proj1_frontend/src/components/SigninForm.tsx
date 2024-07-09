@@ -11,6 +11,7 @@ import {
 import { HOST } from "../config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CloseIcon from "./CloseIcon";
 
 type SigninDataType = {
   email: string;
@@ -64,10 +65,13 @@ export default function SigninForm() {
         console.log("token: " + data.token);
         sessionStorage.setItem("token", data.token);
       })
+      .then(() => {
+        navigate("/products");
+      })
       .catch((err) => {
         alert("Authentication failed: " + err);
       });
-    navigate("/products");
+    
   };
 
   const handleSignupNav = () => {
@@ -81,9 +85,7 @@ export default function SigninForm() {
   return (
     <div className="form_container">
       <div className="form">
-        <div className="close_icon_container">
-          <CloseOutlined />
-        </div>
+        <CloseIcon />
         <div className="form_title">Sign in to your account</div>
         <Field
           label="Email"
