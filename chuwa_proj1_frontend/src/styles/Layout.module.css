@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    
+
     padding: 0.5rem 3rem;
 }
 
@@ -74,7 +74,24 @@
 
     background-color: var(--bg-dark);
     color: var(--white);
+
+    position: relative;
+    cursor: pointer;
 }
+
+.cartQty {
+    position: absolute;
+    top: -0.3rem;
+    right: -0.1rem;
+
+    padding: 0rem 0.4rem;
+
+    border-radius: 15px;
+
+    background-color: var(--text-red);
+    color: var(--bg-light-white);
+}
+
 .cartButton :hover {
     color: var(--text-purple);
 }

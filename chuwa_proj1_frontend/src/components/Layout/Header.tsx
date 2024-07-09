@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import CartDrawer from '../Cart';
 import { jwtDecode } from 'jwt-decode';
 import { NavigateFunction, useNavigate, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 
 const { Search } = Input;
@@ -25,7 +27,6 @@ const Header: React.FC = () => {
         window.location.href = "/products?showdrawer=0";
         // setOpenCart(false);
     };
-    const num = 3;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [tokenDec, setTokenDec] = useState<any>(null);
@@ -36,12 +37,14 @@ const Header: React.FC = () => {
         sessionStorage.clear();
         window.location.href = "/signin";
     }
+    const subtotal = useSelector((state: RootState) => state.cart.subtotal);
+    const cartCount = useSelector((state: RootState) => state.cart.count);
 
     useEffect(() => {
         let decoded: any = null;
         try {
             decoded = jwtDecode(sessionStorage.getItem("token") as string);
-        } catch(err) {
+        } catch (err) {
             console.log("token invalid");
         }
         setTokenDec(decoded);
@@ -74,15 +77,21 @@ const Header: React.FC = () => {
                         <span className={styles.signLink} onClick={ handleSignOut }>Sign Out</span>:
                         <a className={styles.signLink} href="/signin">Sign In</a>}
 
+
                     </div>
                     <div className={styles.cartWrapper}>
-                        <Button className={styles.cartButton} onClick={showDrawer} icon={<ShoppingCartOutlined className={styles.cartIcon} />} />
+                        <Button className={styles.cartButton} onClick={showDrawer} icon={<ShoppingCartOutlined className={styles.cartIcon} />} >
+                            {cartCount === 0 ? <></> : <div className={styles.cartQty}>{cartCount}</div>}
+                        </Button>
+                        {/* <div className={styles.cartQty}>{cartCount}</div> */}
+
+
                         {/* <button className={styles.cartButton}><ShoppingCartOutlined className={styles.cartIcon} /></button> */}
-                        <p className={styles.cartText}>$0.00</p>
+                        <p className={styles.cartText}>${(subtotal /100).toFixed(2)}</p>
                     </div>
                 </div>
                 <Drawer
-                    title={`Cart (${num})`}
+                    title={`Cart (${cartCount})`}
                     // placement={placement}
                     width={500}
                     closable={false}

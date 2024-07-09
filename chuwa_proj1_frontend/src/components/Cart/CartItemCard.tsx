@@ -4,7 +4,7 @@ import { Button, Card, Flex } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../redux/store';
-// import { deleteCartItem } from '../../redux/slice';
+import { deleteCartItem } from '../../redux/slice';
 import { addOrUpdateCartItem } from '../../redux/slice';
 
 import QuantitiController from '../QuantityController'
@@ -23,11 +23,9 @@ const ProductDetail: React.FC<CartCardProps> = ({ productId, name, price_cent, i
     const dispatch = useDispatch<AppDispatch>();
     const quantitySelector = (state: RootState) => state.cart.cartItems[index].quantity;
     const productIdSelector = (state: RootState) => state.cart.cartItems[index].productId;
-    // const quantitySelector = (state: RootState) => state.products.product_list[props.index].num_added;
-    // const productIdSelector = (state: RootState) => state.products.product_list[props.index].id;
 
     const handleDelete = () => {
-        // dispatch(deleteCartItem(productId));
+        dispatch(deleteCartItem(productId));
     };
 
     return (
