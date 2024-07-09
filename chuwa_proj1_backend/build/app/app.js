@@ -37,14 +37,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+var cors = require("cors");
 var db_1 = require("./database/db");
 var auth_1 = require("./routes/auth");
-var cors = require("cors");
+var cart_1 = require("./routes/cart");
 // require("dotenv").config({ path: ".env" });
 var auth_2 = require("./middleware/auth");
 var product_1 = require("./routes/product");
 var app = express();
-app.use(express.json());
+var PORT = 3000;
+// middleware
+app.use(express.json()); // 确保你能够解析 JSON 请求体
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 console.log("connecting to db");
 (0, db_1.connect_db)();
@@ -52,7 +56,8 @@ console.log("connected to db");
 app.get("/", function (req, res) {
     res.send("Hello World!21321dsfsd");
 });
-app.use("/api/auth", auth_1.default);
+app.use("/api/auth", auth_1.default); // 使用路由
+app.use("/api/users/:id/cart", auth_2.loginRequired, auth_2.ensureCorrectUser, cart_1.default);
 app.use("/api/users/:id/product", auth_2.loginRequired, auth_2.ensureCorrectUser, product_1.default);
 app.get("/api/products", auth_2.loginRequired, function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -80,5 +85,6 @@ app.get("/api/products", auth_2.loginRequired, function (req, res, next) {
     });
 });
 app.listen(3000, function () {
+    console.log(app._router.stack);
     console.log("Example app listening on port 3000!");
 });
