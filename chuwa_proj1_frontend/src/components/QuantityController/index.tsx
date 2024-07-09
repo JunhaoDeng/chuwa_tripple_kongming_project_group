@@ -39,7 +39,6 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
         try {
             decoded = jwtDecode(sessionStorage.getItem("token") as string);
         } catch(err) {
-            alert("Token invalid or missing");
             return;
         }
         // console.log(decoded);

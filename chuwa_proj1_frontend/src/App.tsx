@@ -10,6 +10,7 @@ import CreateProductForm from "./components/CreateProductForm";
 import ErrorPage from "./components/ErrorPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EmailNotification from "./components/EmailNotification";
+import ProtectedRoute from "./components/ProtectedRoute";
 // import './App.css'
 
 function App() {
@@ -22,16 +23,24 @@ function App() {
               <Route path="/signin" element={<SigninForm />} />
               <Route path="/signup" element={<SignUpForm />} />
               <Route path="/update-password" element={<UpdatePwdForm />} />
-              <Route path="/update-success" element={<EmailNotification />} />
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/products/create" element={<CreateProductForm />} />
+              <Route path="/update-success" element={<EmailNotification />}/>
+              <Route path="/products" element={
+                <ProtectedRoute element= {<ProductsPage />}/>
+              } />
+              <Route path="/products/create" element={
+                <ProtectedRoute element= {<CreateProductForm />}/>
+              } />
               <Route
                 path="/products/:productId/edit"
-                element={<CreateProductForm />}
+                element={
+                  <ProtectedRoute element= {<CreateProductForm />}/>
+                }
               />
               <Route
                 path="/products/:productId/detail"
-                element={<ProductDetailPage />}
+                element={
+                  <ProtectedRoute element= {<ProductDetailPage />}/>
+                }
               />
               <Route path="/error" element={<ErrorPage />} />
             </Routes>

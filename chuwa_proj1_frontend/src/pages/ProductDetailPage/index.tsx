@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styles from '../../styles/Products.module.css';
 import btnStyles from '../../styles/Btn.module.css';
 import responsiveStyles from '../../styles/Adjustor.module.css';
-import { useParams } from "react-router-dom"
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom"
 // const style: React.CSSProperties = { background: '#0092ff', padding: '8px 0' };
 import { Button, Card, Flex, Typography } from 'antd';
 import { HOST } from '../../config';
@@ -35,7 +35,8 @@ const { Title, Paragraph, Text } = Typography;
 
 const ProductDetailPage: React.FC = () => {
     // const { product_id } = useParams();
-    const params_product_id = "668b578c4cbb11b551187d55";
+    // const productId_in_params = "668b578c4cbb11b551187d55";
+    const { productId: productId_in_params } = useParams();
 
     const quantitySelector = (state: RootState) => state.product_detail.num_added;
     const productIdSelector = (state: RootState) => state.product_detail.id;
@@ -47,14 +48,21 @@ const ProductDetailPage: React.FC = () => {
     const description: string = useSelector((state: RootState) => state.product_detail.description);
     const category: string = useSelector((state: RootState) => state.product_detail.category);
 
+    const navigate: NavigateFunction = useNavigate();
+
     const dispatch: AppDispatch = useDispatch();
     useEffect(() => {
+        console.log(window.location.href);
+        
+        // productId_in_params
+        // if (productId_in_params === null || productId_in_params === undefined) {
+        //     navigate("/error");
+        // }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let decoded: any = null;
         try {
             decoded = jwtDecode(sessionStorage.getItem("token") as string);
         } catch(err) {
-            alert("Token invalid or missing");
             return;
         }
         console.log(decoded);
@@ -65,7 +73,7 @@ const ProductDetailPage: React.FC = () => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`
             }
         };
-        fetch(`${HOST}/api/users/${decoded.id}/product/${params_product_id}`, options) // get the product detail
+        fetch(`${HOST}/api/users/${decoded.id}/product/${productId_in_params}`, options) // get the product detail
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -85,15 +93,31 @@ const ProductDetailPage: React.FC = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            console.log("XXXXX", data);
+            console.log("YYYYY", productId_in_params);
+            console.log("length: ", data.cartItems.length);
+            
             let prod_idx = -1, quantity_added = 0;
-            for (let i = 0; i < data.length; ++i) {
-                if (data[i].productId === params_product_id) {
-                    quantity_added = data[i].quantity;
+            for (let i = 0; i < data.cartItems.length; ++i) {
+                
+                if (data.cartItems[i].productId === productId_in_params) {
+                    console.log("HERE");
+                    console.log(data.cartItems[i].quantity);
+                    
+                    quantity_added = data.cartItems[i].quantity;
                     prod_idx = i;
                 }
             }
+            console.log(quantity_added);
+            
+            // if (prod_idx === -1) {
+            //     navigate("/error");
+            // }
             dispatch(productDetailSetNumAdded(Number(quantity_added)));
+        }).catch((err) => {
+            console.log(err);
+            
+            navigate("/error")
         })
     }, []);
 
@@ -103,7 +127,6 @@ const ProductDetailPage: React.FC = () => {
         try {
             decoded = jwtDecode(sessionStorage.getItem("token") as string);
         } catch(err) {
-            alert("Token invalid or missing");
             return;
         }
         // console.log(decoded);

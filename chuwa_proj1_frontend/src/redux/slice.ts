@@ -392,7 +392,6 @@ const getUserIdFromToken = (): string => {
         const decoded = jwtDecode<{ id: string }>(token);
         return decoded.id;
     } catch (err) {
-        alert('Token invalid or missing');
         throw new Error('Token invalid or missing');
     }
 };
