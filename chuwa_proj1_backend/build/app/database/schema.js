@@ -155,6 +155,7 @@ var CartSchema = new mongoose_1.Schema({
         {
             product: {
                 type: mongoose_1.Schema.Types.ObjectId,
+                ref: 'Product',
                 required: true,
             },
             quantity: {
@@ -171,7 +172,7 @@ var CartSchema = new mongoose_1.Schema({
     },
     estimated_total_cent: {
         type: Number,
-        required: true,
+        // required: true,
     },
 });
 exports.Account = mongoose_1.default.model("Account", AccountSchema);

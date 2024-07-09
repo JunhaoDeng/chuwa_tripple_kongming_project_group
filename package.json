@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd chuwa_proj1_frontend && npm run dev",
-    "server": "cd chuwa_proj1_backend && npm start",
+    "server": "cd chuwa_proj1_backend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],

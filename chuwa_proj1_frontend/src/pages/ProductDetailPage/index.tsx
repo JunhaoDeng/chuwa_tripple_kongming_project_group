@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import styles from '../../styles/Products.module.css';
-import btnStyles from '../../styles/Btn.module.css';
-import responsiveStyles from '../../styles/Adjustor.module.css';
-import { useParams } from "react-router-dom"
+import React, { useEffect } from "react";
+import styles from "../../styles/Products.module.css";
+import btnStyles from "../../styles/Btn.module.css";
+import responsiveStyles from "../../styles/Adjustor.module.css";
+import { useParams } from "react-router-dom";
 // const style: React.CSSProperties = { background: '#0092ff', padding: '8px 0' };
 import { Button, Card, Flex, Typography } from 'antd';
 import { HOST } from '../../config';
@@ -12,30 +12,29 @@ import { AppDispatch, RootState } from '../../redux/store';
 import { ASThunkDatatype, productDetailAsyncSetNumAdded, productDetailSetCategory, productDetailSetDescription, productDetailSetId, productDetailSetImageLink, productDetailSetName, productDetailSetNumAdded, productDetailSetPrice } from '../../redux/slice';
 import QuantitiController from '../../components/QuantityController';
 
+
 const cardStyle: React.CSSProperties = {
-    width: "100%",
-    height: "100%",
-    padding: "2rem",
-    border: '0',
-    borderRadius: "0px",
-    alignItems: 'center'
+  width: "100%",
+  height: "100%",
+  padding: "2rem",
+  border: "0",
+  borderRadius: "0px",
+  alignItems: "center",
 };
 
 const imgStyle: React.CSSProperties = {
-    display: 'block',
-    width: "50%",
-    borderRadius: '0',
-    alignSelf: 'center'
+  display: "block",
+  width: "50%",
+  borderRadius: "0",
+  alignSelf: "center",
 };
-
 
 const { Title, Paragraph, Text } = Typography;
 
-
-
 const ProductDetailPage: React.FC = () => {
-    // const { product_id } = useParams();
-    const params_product_id = "668b578c4cbb11b551187d55";
+  // const { product_id } = useParams();
+  const params_product_id = "668b578c4cbb11b551187d55";
+
 
     const quantitySelector = (state: RootState) => state.product_detail.num_added;
     const productIdSelector = (state: RootState) => state.product_detail.id;
@@ -161,9 +160,8 @@ const ProductDetailPage: React.FC = () => {
                 </Flex>
             </Card>
             {/* </div> */}
-
-        </div>
-    )
-}
+    </div>
+  );
+};
 
 export default ProductDetailPage;

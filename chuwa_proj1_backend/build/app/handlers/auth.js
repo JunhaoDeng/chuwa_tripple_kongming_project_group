@@ -44,11 +44,11 @@ var jwt = require("jsonwebtoken");
 require("dotenv").config({ path: ".env" });
 var signup = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var account, id, email, token, err_1;
+        var account, id, email, cart, token, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
+                    _a.trys.push([0, 5, , 6]);
                     console.log("req.body", req.body);
                     console.log("req.body id:", req.body.id);
                     console.log("req.body email:", req.body.email);
@@ -61,11 +61,24 @@ var signup = function (req, res, next) {
                     id = account.id, email = account.email;
                     console.log("id", id);
                     console.log("email", email);
+                    return [4 /*yield*/, db_1.Cart.create({
+                            items: [],
+                            zip_code: req.body.zip_code || "",
+                            discount_cent: req.body.discount_cent || 0,
+                            estimated_total_cent: req.body.estimated_total_cent,
+                        })];
+                case 2:
+                    cart = _a.sent();
+                    console.log("cart", cart);
+                    account.cart = cart._id;
+                    return [4 /*yield*/, account.save()];
+                case 3:
+                    _a.sent();
                     return [4 /*yield*/, jwt.sign({
                             id: id,
                             email: email,
                         }, process.env.JWT_SECRET_KEY)];
-                case 2:
+                case 4:
                     token = _a.sent();
                     console.log("token", token);
                     return [2 /*return*/, res.status(200).json({
@@ -73,7 +86,7 @@ var signup = function (req, res, next) {
                             email: email,
                             token: token,
                         })];
-                case 3:
+                case 5:
                     err_1 = _a.sent();
                     // see what kind of error
                     // if it is a certain error
@@ -88,7 +101,7 @@ var signup = function (req, res, next) {
                             status: 400,
                             message: err_1.message,
                         })];
-                case 4: return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     });

@@ -13,11 +13,13 @@ import { AsyncSetProductDataType, productsAsyncSetProductList } from '../../redu
 import { HOST } from '../../config';
 import { jwtDecode } from 'jwt-decode';
 
+
 const ProductsPage: React.FC = () => {
-    // const setSortBy = (val: String) => {
-    //     console.log(val);
-    //     // wait to implement
-    // }
+  // const setSortBy = (val: String) => {
+  //     console.log(val);
+  //     // wait to implement
+  // }
+
 
     // Pagination
     const [current, setCurrent] = useState(1);
@@ -52,9 +54,8 @@ const ProductsPage: React.FC = () => {
             </Flex>
             <ProductsBoard current_page={current}/>
             <Pagination className={styles.pageNav} current={current} onChange={onChange} total={ product_list.length } pageSize={ 10 } showSizeChanger={false}/>
-
-        </div>
-    )
-}
+    </div>
+  );
+};
 
 export default ProductsPage;
