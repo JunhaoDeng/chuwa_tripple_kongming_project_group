@@ -217,8 +217,9 @@ export const products_set_product_list = (state: any, actions: PayloadAction<PSP
             image_link: item.image_link
         }
     });
-    state.products.product_list = state.products.product_list.reverse();
 
+    state.products.product_list = state.products.product_list.reverse();
+    state.cart.count = actions.payload.reduce((total, item) => total + item.num_added, 0);
     state.products2.created_by = actions.payload.map(item  => {
         return item.created_by;
     });
@@ -245,13 +246,16 @@ export const products_set_page_selected = (state: any, actions: PayloadAction<nu
 
 export type PSONAActionType = {
     newCount: number,
-    product_id: string
+    product_id: string,
+    isAdd: boolean,
 }
 
 export const products_set_one_num_added = (state: any, actions: PayloadAction<PSONAActionType>) => {
     for (let i = 0; i < state.products.product_list.length; ++i) {
         if (state.products.product_list[i].id === actions.payload.product_id) {
             state.products.product_list[i].num_added = actions.payload.newCount;
+            
+            actions.payload.isAdd ? state.cart.count += 1 : state.cart.count -=1;
             break;
         }
     }

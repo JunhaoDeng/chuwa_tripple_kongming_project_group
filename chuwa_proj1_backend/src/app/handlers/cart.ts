@@ -22,7 +22,6 @@ export const getAllProduct = async function (req, res, next) {
             img_link: item.product.img_link,
             quantity: item.quantity
         }));
-        console.log({ cartItems });
 
         res.status(200).json({ cartItems });
     } catch (err) {
@@ -39,7 +38,7 @@ export const increaseCart = async function (req, res, next) {
         const productId = req.params.productId;
         // step 1: get the user's cart: no cart / has cart
         const user = await Account.findById(userId).populate('cart');
-        
+
         console.log(user);
         let cart;
         if (!user.cart) {
@@ -63,6 +62,11 @@ export const increaseCart = async function (req, res, next) {
                 // has product
                 if (req.body.quantity !== undefined) {
                     cartItem.quantity = req.body.quantity;
+                    // remove
+                    if (req.body.quantity === 0) {
+                        cart.items = cart.items.filter(item => item.product.toString() !== productId);
+                        await cart.save();
+                    }
                 } else {
                     cartItem.quantity += 1;
                 }
@@ -118,21 +122,46 @@ export const removeProduct = async function (req, res, next) {
         const productId = req.params.productId;
         const userId = req.params.id;
 
-        const user = await Account.findById(userId).populate('cart');
+        const user = await Account.findById(userId).populate({
+            path: 'cart',
+            populate: {
+                path: 'items.product',
+                select: '_id name price_cent img_link'
+            }
+        });
+
+        // const user = await Account.findById(userId).populate('cart');
         const cart = await Cart.findById(user.cart);
 
         // if product not in cart
         const cartItem = cart.items.find(item => item.product.toString() === productId);
-        if (cartItem) {
-            cart.items = cart.items.filter(item => item.product.toString() !== productId);
-            await cart.save();
 
-            console.log('Product delete successfully.');
-        } else {
-            throw new Error('Product not found in cart');
+        if (!cartItem) {
+            return res.status(404).json({ message: 'Product not found in cart' });
         }
+        // remove
+        cart.items = cart.items.filter(item => item.product.toString() !== productId);
+        await cart.save();
 
-        return res.status(200).json(cart);
+        // repopulate user's cart
+        const updatedUser = await Account.findById(userId).populate({
+            path: 'cart',
+            populate: {
+                path: 'items.product',
+                select: '_id name price_cent img_link'
+            }
+        });
+
+        const cartItems = updatedUser.cart.items.map(item => ({
+            productId: item.product._id,
+            name: item.product.name,
+            price_cent: item.product.price_cent,
+            img_link: item.product.img_link,
+            quantity: item.quantity
+        }));
+
+        console.log(cartItems)
+        return res.status(200).json({ cartItems });
 
     } catch (err) {
         console.error("Failed to update cart");
