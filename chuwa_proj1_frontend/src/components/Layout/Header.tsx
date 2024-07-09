@@ -5,7 +5,7 @@ import styles from '../../styles/Layout.module.css';
 import { useEffect, useState } from 'react';
 import CartDrawer from '../Cart';
 import { jwtDecode } from 'jwt-decode';
-import { useSearchParams } from 'react-router-dom';
+import { NavigateFunction, useNavigate, useSearchParams } from 'react-router-dom';
 
 
 const { Search } = Input;
@@ -29,6 +29,13 @@ const Header: React.FC = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [tokenDec, setTokenDec] = useState<any>(null);
+
+    // const navigate: NavigateFunction = useNavigate();
+
+    const handleSignOut = () => {
+        sessionStorage.clear();
+        window.location.href = "/signin";
+    }
 
     useEffect(() => {
         let decoded: any = null;
@@ -64,7 +71,7 @@ const Header: React.FC = () => {
                     <div className={styles.userWrapper}>
                         <UserOutlined className={styles.userIcon} />
                         {tokenDec !== null ?
-                        <span className={styles.signLink}>{tokenDec.email}</span>:
+                        <span className={styles.signLink} onClick={ handleSignOut }>Sign Out</span>:
                         <a className={styles.signLink} href="/signin">Sign In</a>}
 
                     </div>
