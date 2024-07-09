@@ -1,3 +1,4 @@
 */node_modules/
+node_modules/
 chuwa_proj1_backend/database/Makefile
 chuwa_proj1_backend/database/test.ts
