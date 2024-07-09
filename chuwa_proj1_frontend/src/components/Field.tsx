@@ -25,6 +25,7 @@ type FieldPropType = {
 };
 
 export default function Field(props: FieldPropType) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isValid, setIsValid] = useState(true); // state to track input validity
   const input_data = useSelector(props.inputDataSelectorFunc);
   const error_msg = useSelector(props.errormsgDataSelectorFunc);
@@ -42,11 +43,12 @@ export default function Field(props: FieldPropType) {
 
   const handleInputChange = (value: string) => {
     dispatch(props.inputDataAction(value));
+    props.onInputChange(input_data, false);
     // console.log(input_data);
-    const msg: string = props.checkFunc(input_data);
-    setIsValid(msg === ""); // update validity state
-    props.onInputChange(value, msg === ""); // notify parent component
-    dispatch(props.errormsgAction(msg));
+    // const msg: string = props.checkFunc(input_data);
+    // setIsValid(msg === ""); // update validity state
+    // props.onInputChange(value, msg === ""); // notify parent component
+    // dispatch(props.errormsgAction(msg));
     if (props.ssid !== undefined) {
       sessionStorage.setItem(props.ssid, value);
     }
@@ -54,6 +56,8 @@ export default function Field(props: FieldPropType) {
 
   const handleCheck = () => {
     const msg: string = props.checkFunc(input_data);
+    setIsValid(msg === ""); // update validity state
+    props.onInputChange(input_data, msg === ""); // notify parent component
     dispatch(props.errormsgAction(msg));
   };
 
