@@ -8,7 +8,7 @@ import SigninForm from "./components/SigninForm";
 import UpdatePwdForm from "./components/UpdatePwdForm";
 import CreateProductForm from "./components/CreateProductForm";
 import ErrorPage from "./components/ErrorPage";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import EmailNotification from "./components/EmailNotification";
 import ProtectedRoute from "./components/ProtectedRoute";
 // import './App.css'
@@ -20,6 +20,11 @@ function App() {
         <Layout>
           <BrowserRouter>
             <Routes>
+              <Route path="/" element={
+                <ProtectedRoute element= {
+                  <Navigate to="/products" replace />
+                }/>
+              } />
               <Route path="/signin" element={<SigninForm />} />
               <Route path="/signup" element={<SignUpForm />} />
               <Route path="/update-password" element={<UpdatePwdForm />} />
