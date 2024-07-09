@@ -3,6 +3,7 @@ import "../styles/Field.css";
 import { RootState, AppDispatch } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import React, { useState } from "react";
 
 type FieldPropType = {
   label: string;
@@ -15,6 +16,7 @@ type FieldPropType = {
   placeholder: string;
   inputDataSelectorFunc: (state: RootState) => any;
   errormsgDataSelectorFunc: (state: RootState) => any;
+  onInputChange: (value: string, valid: boolean) => void; // callback function
   inputDataAction: any;
   errormsgAction: any;
   label_bold?: boolean;
@@ -23,6 +25,7 @@ type FieldPropType = {
 };
 
 export default function Field(props: FieldPropType) {
+  const [isValid, setIsValid] = useState(true); // state to track input validity
   const input_data = useSelector(props.inputDataSelectorFunc);
   const error_msg = useSelector(props.errormsgDataSelectorFunc);
 
@@ -40,7 +43,10 @@ export default function Field(props: FieldPropType) {
   const handleInputChange = (value: string) => {
     dispatch(props.inputDataAction(value));
     // console.log(input_data);
-
+    const msg: string = props.checkFunc(input_data);
+    setIsValid(msg === ""); // update validity state
+    props.onInputChange(value, msg === ""); // notify parent component
+    dispatch(props.errormsgAction(msg));
     if (props.ssid !== undefined) {
       sessionStorage.setItem(props.ssid, value);
     }
