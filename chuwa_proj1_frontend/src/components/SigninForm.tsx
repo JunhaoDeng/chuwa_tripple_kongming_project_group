@@ -67,7 +67,7 @@ export default function SigninForm() {
         sessionStorage.setItem("token", data.token);
       })
       .then(() => {
-        navigate("/products");
+        window.location.href = "/products";
       })
       .catch((err) => {
         alert("Authentication failed: " + err);

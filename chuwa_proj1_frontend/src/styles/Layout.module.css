@@ -152,6 +152,11 @@ a {
     color: var(--text-white);
 }
 
+.signLink {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 /* adaptive */
 @media (max-width: 44rem) {
 
