@@ -5,18 +5,25 @@ import styles from '../../styles/Layout.module.css';
 import { useEffect, useState } from 'react';
 import CartDrawer from '../Cart';
 import { jwtDecode } from 'jwt-decode';
+import { useSearchParams } from 'react-router-dom';
 
 
 const { Search } = Input;
 const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value);
 
 const Header: React.FC = () => {
+    
     const [open, setOpenCart] = useState(false);
+
+    // const [queryparams] = useSearchParams();
+
     const showDrawer = () => {
-        setOpenCart(true);
+        window.location.href = "/products?showdrawer=1";
+        // setOpenCart(true);
     };
     const onClose = () => {
-        setOpenCart(false);
+        window.location.href = "/products?showdrawer=0";
+        // setOpenCart(false);
     };
     const num = 3;
 
@@ -31,6 +38,18 @@ const Header: React.FC = () => {
             console.log("token invalid");
         }
         setTokenDec(decoded);
+
+        const equalloc: number = window.location.href.indexOf("=")
+        if (equalloc === -1) {
+            setOpenCart(false);
+        } else {
+            const val: string = window.location.href.slice(equalloc + 1);
+            if (val ==='1') {
+                setOpenCart(true);
+            } else {
+                setOpenCart(false);
+            }
+        }
     }, [])
     return (
         <>
