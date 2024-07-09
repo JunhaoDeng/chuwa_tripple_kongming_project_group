@@ -217,13 +217,26 @@ export const products_set_product_list = (state: any, actions: PayloadAction<PSP
             image_link: item.image_link
         }
     });
+    state.products.product_list = state.products.product_list.reverse();
+
     state.products2.created_by = actions.payload.map(item  => {
         return item.created_by;
     });
+    state.products2.created_by = state.products2.created_by.reverse();
 }
 
-export const products_set_sortby = (state: any, actions: PayloadAction<number>) => {
-    state.products.sortby = actions.payload;
+export const products_sort_product_list_ltoh = (state: any) => {
+  const indices = Array.from({ length: state.products.product_list.length }, (v, i) => i);
+  indices.sort((a, b) => state.products.product_list[a].price - state.products.product_list[b].price);
+  state.products.product_list = indices.map(i => state.products.product_list[i]);
+  state.products2.created_by = indices.map(i => state.products2.created_by[i]);
+}
+
+export const products_sort_product_list_htol = (state: any) => {
+  const indices = Array.from({ length: state.products.product_list.length }, (v, i) => i);
+  indices.sort((a, b) => state.products.product_list[b].price - state.products.product_list[a].price);
+  state.products.product_list = indices.map(i => state.products.product_list[i]);
+  state.products2.created_by = indices.map(i => state.products2.created_by[i]);
 }
 
 export const products_set_page_selected = (state: any, actions: PayloadAction<number>) => {
