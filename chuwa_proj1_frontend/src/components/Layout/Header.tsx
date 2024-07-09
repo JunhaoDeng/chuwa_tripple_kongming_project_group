@@ -83,11 +83,9 @@ const Header: React.FC = () => {
                         <Button className={styles.cartButton} onClick={showDrawer} icon={<ShoppingCartOutlined className={styles.cartIcon} />} >
                             {cartCount === 0 ? <></> : <div className={styles.cartQty}>{cartCount}</div>}
                         </Button>
-                        {/* <div className={styles.cartQty}>{cartCount}</div> */}
-
 
                         {/* <button className={styles.cartButton}><ShoppingCartOutlined className={styles.cartIcon} /></button> */}
-                        <p className={styles.cartText}>${(subtotal /100).toFixed(2)}</p>
+                        {/* <p className={styles.cartText}>${(subtotal /100).toFixed(2)}</p> */}
                     </div>
                 </div>
                 <Drawer

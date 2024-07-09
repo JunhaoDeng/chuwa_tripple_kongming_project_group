@@ -220,6 +220,7 @@ export const products_set_product_list = (state: any, actions: PayloadAction<PSP
 
     state.products.product_list = state.products.product_list.reverse();
     state.cart.count = actions.payload.reduce((total, item) => total + item.num_added, 0);
+    // state.cart.subtotal = actions.payload.reduce((total, item) => total + item.price * item.num_add, 0);
     state.products2.created_by = actions.payload.map(item  => {
         return item.created_by;
     });
