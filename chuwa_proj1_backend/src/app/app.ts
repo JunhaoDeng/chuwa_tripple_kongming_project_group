@@ -15,7 +15,7 @@ const PORT: Number = 3000;
 
 // middleware
 app.use(express.json()); // 确保你能够解析 JSON 请求体
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 

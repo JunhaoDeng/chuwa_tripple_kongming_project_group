@@ -10,8 +10,9 @@ export const getAllProduct = async function (req, res, next) {
                 select: 'name price_cent img_link'
             }
         });
-
-        if (!user || !user.cartId) {
+        // console.log(user);
+        
+        if (!user || !user.cart) {
             console.error('Cart not found')
             throw new Error('Cart not found');
         }
@@ -27,7 +28,7 @@ export const getAllProduct = async function (req, res, next) {
             };
         });
 
-        res.status(200);
+        res.status(200).json(cartProducts);
     } catch (err) {
         return next({
             status: 400,
@@ -38,18 +39,20 @@ export const getAllProduct = async function (req, res, next) {
 
 export const increaseCart = async function (req, res, next) {
     console.log("Hhhhhhh", req.params);
+    
     try {
         const userId = req.params.id;
         const productId = req.params.productId;
         // step 1: get the user's cart: no cart / has cart
         const user = await Account.findById(userId).populate('cart');
+        
         console.log(user);
         let cart;
         if (!user.cart) {
             // no cart, create cart
             cart = new Cart({
                 product: productId,
-                quantity: 1,
+                quantity: (req.body.quantity !== undefined ? req.body.quantity : 1)
             });
             await cart.save();
 
@@ -64,9 +67,13 @@ export const increaseCart = async function (req, res, next) {
             const cartItem = cart.items.find(item => item.product.toString() === productId);
             if (cartItem) {
                 // has product
-                cartItem.quantity += 1;
+                if (req.body.quantity !== undefined) {
+                    cartItem.quantity = req.body.quantity;
+                } else {
+                    cartItem.quantity += 1;
+                }
             } else {
-                cart.items.push({ product: productId, quantity: 1 });
+                cart.items.push({ product: productId, quantity: (req.body.quantity !== undefined ? req.body.quantity : 1) });
             }
 
             await cart.save();
