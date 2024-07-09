@@ -245,6 +245,16 @@ export const products_set_one_num_added = (state: any, actions: PayloadAction<PS
 
 }
 
+export const add_or_update_cart_item = (state: any, actions: PayloadAction<PSONAActionType>) => {
+  for (let i = 0; i < state.products.product_list.length; ++i) {
+      if (state.cart.cartItems[i].productId === actions.payload.product_id) {
+          state.cart.cartItems[i].quantity = actions.payload.newCount;
+          break;
+      }
+  }
+
+}
+
 // products2
 // export const product2_set_created_by = (state: any, actions: PayloadAction<PSPLActionDataType[]>) => {
 //     state.products2.created_by = actions.payload.map(item  => {
