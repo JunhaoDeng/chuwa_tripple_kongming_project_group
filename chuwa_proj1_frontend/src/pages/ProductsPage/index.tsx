@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Button, Select, Pagination, Flex } from 'antd';
 import type { PaginationProps } from 'antd';
@@ -7,6 +7,11 @@ import btnStyles from '../../styles/Btn.module.css';
 import responsiveStyles from '../../styles/Adjustor.module.css';
 
 import ProductsBoard from './ProductsBoard';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { AsyncSetProductDataType, productsAsyncSetProductList } from '../../redux/slice';
+import { HOST } from '../../config';
+import { jwtDecode } from 'jwt-decode';
 
 const ProductsPage: React.FC = () => {
     // const setSortBy = (val: String) => {
@@ -16,7 +21,10 @@ const ProductsPage: React.FC = () => {
 
     // Pagination
     const [current, setCurrent] = useState(1);
+    
+    const product_list: any = useSelector((state: RootState) => state.products.product_list);
 
+    const dummy = 6.8;
     const onChange: PaginationProps['onChange'] = (page) => {
         console.log(page);
         setCurrent(page);
@@ -42,9 +50,8 @@ const ProductsPage: React.FC = () => {
                     <Button className={btnStyles.uniformPrimaryBtn}>Add Product</Button>
                 </div>
             </Flex>
-            <ProductsBoard />
-            {/* <Pagination align="end" defaultCurrent={1} total={50} /> */}
-            <Pagination className={styles.pageNav} current={current} onChange={onChange} total={100} showSizeChanger={false}/>
+            <ProductsBoard current_page={current}/>
+            <Pagination className={styles.pageNav} current={current} onChange={onChange} total={ product_list.length } pageSize={ 10 } showSizeChanger={false}/>
 
         </div>
     )

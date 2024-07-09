@@ -154,7 +154,7 @@ const ProductDetailPage: React.FC = () => {
                         <Flex style={{width: '70%', marginTop: '1rem'}} gap="small">
                             {num_added === 0 && <Button className={btnStyles.uniformPrimaryBtn} style={{ flex: '1 1 0' }} type="primary" onClick={ handleAddProduct }>Add To Cart</Button>}
                             {num_added !== 0 && <QuantitiController quantitySelectorFunc={ quantitySelector } 
-                                    productIdSelectorFunc={productIdSelector} setQuantityAction={ productDetailSetNumAdded } />}
+                                    productIdSelectorFunc={productIdSelector} setQuantityAction={ productDetailAsyncSetNumAdded } />}
                             <Button style={{ flex: '1 1 0' }}>Edit</Button>
                         </Flex>
                     </Flex>

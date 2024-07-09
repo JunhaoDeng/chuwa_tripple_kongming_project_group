@@ -74,6 +74,10 @@
     align-self: flex-end;
 }
 
+.notvendor_hidden {
+    visibility: hidden;
+}
+
 /* responsive */
 @media (max-width: 44rem) {
     .productCard {

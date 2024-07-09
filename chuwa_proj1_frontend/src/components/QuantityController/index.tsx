@@ -32,7 +32,7 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
 
     const [tempCount, setTempCount] = useState<number>(count);
 
-    const handleMinusClick = () => {
+    const handleAmountChange = (newAmount: number) => {
         console.log(count);
         
         let decoded: any = null;
@@ -45,7 +45,7 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
         // console.log(decoded);
 
         const postbody = {
-            quantity: count - 1
+            quantity: newAmount
         };
 
         const options = {
@@ -63,39 +63,8 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
             options: options
         };
 
-        dispatch(productDetailAsyncSetNumAdded(thunkdata));
-    }
-
-    const handlePlusClick = () => {
-        let decoded: any = null;
-        try {
-            decoded = jwtDecode(sessionStorage.getItem("token") as string);
-        } catch(err) {
-            alert("Token invalid or missing");
-            return;
-        }
-        // console.log(decoded);
-
-        const postbody = {
-            quantity: count + 1
-        };
-
-        const options = {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(postbody)
-        };
-
-        const thunkdata: ASThunkDatatype = {
-            url: `${HOST}/api/users/${decoded.id}/cart/${product_id}`,
-            product_id: product_id,
-            options: options
-        };
-
-        dispatch(productDetailAsyncSetNumAdded(thunkdata));
+        // dispatch(productDetailAsyncSetNumAdded(thunkdata));
+        dispatch(props.setQuantityAction(thunkdata));
     }
 
     const handleInputBlur = () => {
@@ -103,53 +72,9 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
         if (tempCount === -1) {
             setTempCount(count);
             return;
+        } else {
+            handleAmountChange(tempCount);
         }
-        
-        let decoded: any = null;
-        try {
-            decoded = jwtDecode(sessionStorage.getItem("token") as string);
-        } catch(err) {
-            alert("Token invalid or missing");
-            return;
-        }
-        // console.log(decoded);
-
-        const postbody = {
-            quantity: tempCount
-        };
-
-        const options = {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(postbody)
-        };
-
-        const thunkdata: ASThunkDatatype = {
-            url: `${HOST}/api/users/${decoded.id}/cart/${product_id}`,
-            product_id: product_id,
-            options: options
-        };
-
-        dispatch(productDetailAsyncSetNumAdded(thunkdata));
-
-        // fetch(`${HOST}/api/users/${decoded.id}/cart/${product_id}`, options)
-        // .then(response => response.json())
-        // .then(data => {
-        //     let newCount = 0;
-        //     for (let i = 0; i < data.items.length; ++i) {
-        //         if (data.items[i].product === product_id) {
-        //             newCount = Number(data.items[i].quantity);
-        //             break;
-        //         }
-        //     }
-        //     dispatch(props.setQuantityAction(newCount));
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // });
     }
 
     const handleInputChange = (val: number | null) => {
@@ -173,10 +98,10 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
             }}
         >
             <Space.Compact block style={{ width: "5rem"}}>
-                <Button style={{ width: '25%' }} size='small' icon={<MinusOutlined onClick={handleMinusClick} />}></Button>
+                <Button style={{ width: '25%' }} size='small' icon={<MinusOutlined onClick={() => handleAmountChange(count - 1)} />}></Button>
                 <InputNumber style={{ width: '50%' }} className="quantityInput" size="small" controls={false} defaultValue={count} value={count}
                  onChange={(val) => handleInputChange(val)} onBlur={ handleInputBlur }/>
-                <Button style={{ width: '25%' }} size='small' icon={<PlusOutlined onClick={handlePlusClick} />}></Button>
+                <Button style={{ width: '25%' }} size='small' icon={<PlusOutlined onClick={() => handleAmountChange(count + 1)} />}></Button>
             </Space.Compact>
         </ConfigProvider>
     )

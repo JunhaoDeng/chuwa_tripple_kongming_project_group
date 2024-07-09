@@ -109,17 +109,34 @@ export const create_product_set_image_link_preview_error = (state: any, actions:
     state.create_product.image_link_preview_error = actions.payload
 }
 
-type PSPLActionDataType = {
+export type PSPLActionDataType = {
     id: string,
     name: string,
     price: number,
     num_added: number,
-    image_link: string
+    image_link: string,
+    created_by: {
+        _id: string,
+        email: string,
+        type: string
+    },
+    quantity: number
 }[];
 
 // products
 export const products_set_product_list = (state: any, actions: PayloadAction<PSPLActionDataType[]>) => {
-    state.products.product_list = actions.payload;
+    state.products.product_list = actions.payload.map((item: PSPLActionDataType, index) => {
+        return {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            num_added: item.num_added,
+            image_link: item.image_link
+        }
+    });
+    state.products2.created_by = actions.payload.map(item  => {
+        return item.created_by;
+    });
 }
 
 export const products_set_sortby = (state: any, actions: PayloadAction<number>) => {
@@ -129,6 +146,28 @@ export const products_set_sortby = (state: any, actions: PayloadAction<number>) 
 export const products_set_page_selected = (state: any, actions: PayloadAction<number>) => {
     state.products.page_selected = actions.payload;
 }
+
+export type PSONAActionType = {
+    newCount: number,
+    product_id: string
+}
+
+export const products_set_one_num_added = (state: any, actions: PayloadAction<PSONAActionType>) => {
+    for (let i = 0; i < state.products.product_list.length; ++i) {
+        if (state.products.product_list[i].id === actions.payload.product_id) {
+            state.products.product_list[i].num_added = actions.payload.newCount;
+            break;
+        }
+    }
+
+}
+
+// products2
+// export const product2_set_created_by = (state: any, actions: PayloadAction<PSPLActionDataType[]>) => {
+//     state.products2.created_by = actions.payload.map(item  => {
+//         return item.created_by._id;
+//     });
+// }
 
 // product_detail
 export const product_detail_set_id = (state: any, action: PayloadAction<string>) => {
