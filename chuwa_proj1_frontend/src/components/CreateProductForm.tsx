@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/CreateProductForm.css"
 import AreaField from "./AreaField";
 import DropdownField from "./DropdownField";
@@ -9,6 +9,7 @@ import { createProductSetCategory, createProductSetCategoryErrormsg, createProdu
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode, JwtPayload } from "jwt-decode"
 import { HOST } from "../config";
+import { useNavigate, useParams } from "react-router-dom";
 
 type ProductDataType = {
     name: string,
@@ -20,6 +21,49 @@ type ProductDataType = {
 };
 
 export default function CreateProductForm() {
+    const { productId } = useParams();
+
+    const isedit = () => {
+        return productId !== null && productId !== undefined;
+    }
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        let decoded: any = null;
+                try {
+                    decoded = jwtDecode(sessionStorage.getItem("token") as string);
+                } catch(err) {
+                    return;
+                }
+                console.log(decoded);
+        
+                const options = {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+        setTimeout(() => {
+            if (isedit()) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                
+                fetch(`${HOST}/api/users/${decoded.id}/product/${productId}`, options) // get the product detail
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data?.created_by !== decoded.id){
+                        navigate("/error");
+                    }
+                    dispatch(createProductSetName(data.name));
+                    dispatch(createProductSetPrice(Number(data.price_cent) / 100));
+                    dispatch(createProductSetImageLink(data.img_link));
+                    dispatch(createProductSetDescription(data.description));
+                    dispatch(createProductSetCategory(data.category));
+                    dispatch(createProductSetQuantity(data.quantity));
+                })
+            }
+        }, 1000);
+    }, []);
     const makeSimpleCheckFunc = (warn: string) => {
         return (data: string) => {
             if (data.length === 0) {
@@ -115,14 +159,29 @@ export default function CreateProductForm() {
         } catch(err) {
             return;
         }
-        fetch(`${HOST}/api/users/${decoded.id}/product`, options)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-        .catch(err => {
-            alert(err);
-        });
+        if (isedit()) {
+            options.method = "PUT";
+            fetch(`${HOST}/api/users/${decoded.id}/product/${productId}`, options)
+            .then(() => {
+                navigate("/products");
+            })
+            .catch(err => {
+                navigate("/error");
+            })
+        } else {
+            fetch(`${HOST}/api/users/${decoded.id}/product/`, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .then(() => {
+                navigate("/products");
+            })
+            .catch(err => {
+                alert(err);
+            });
+        }
+        
     }
 
     const handleImageLoadError = () => {
@@ -137,7 +196,7 @@ export default function CreateProductForm() {
 
 
     return <div className="cpf_container">
-        <div className="cpf_title">Create Product</div>
+        <div className="cpf_title">{ isedit() ? "Edit Product" : "Create Product" }</div>
         <div className="cpf_form">
             <Field label="Product name" ssid="cp_product_name" type="text" 
                 checkFunc={ makeSimpleCheckFunc("Product name cannot be empty") } 
@@ -235,7 +294,7 @@ export default function CreateProductForm() {
                 </div>
             </div>
             <div className="add_product_button_container">
-                <button className="add_product_button" onClick={ handleFormSubmit }>Add Product</button>
+                <button className="add_product_button" onClick={ handleFormSubmit }>{ isedit() ? "Edit Product" : "Add Product" }</button>
             </div>
         </div>
     </div>

@@ -78,6 +78,10 @@ const ItemCard = (props: ItemCardPropsType) => {
   const handleItemClicked = () => {
     navigate(`/products/${product.id}/detail`);
   }
+  ///products/:productId/edit
+  const handleEditClicked = () => {
+    navigate(`/products/${product.id}/edit`);
+  }
   return <Card
     className={styles.productCard}
     hoverable
@@ -92,7 +96,7 @@ const ItemCard = (props: ItemCardPropsType) => {
         {/* <QuantitiController /> */}
         {/* { JSON.stringify(tokenDec) }
         { JSON.stringify(created_by.type) } */}
-        { (tokenDec.id === created_by._id) && <Button style={{flexGrow: 1}} size='small'>Edit</Button>}
+        { (tokenDec.id === created_by._id) && <Button style={{flexGrow: 1}} size='small' onClick={ handleEditClicked }>Edit</Button>}
       </Flex>
     ]}
   >
