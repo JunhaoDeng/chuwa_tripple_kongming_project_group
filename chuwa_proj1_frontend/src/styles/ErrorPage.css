@@ -1,0 +1,59 @@
+/* @import "~antd/dist/reset.css"; */
+
+.ant-btn-primary {
+  background-color: #5049e5;
+  border-color: #5049e5;
+  color: white; /* 文字颜色可以根据需要自定义 */
+}
+
+.ant-result-icon {
+  background-color: #5049e5;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+}
+
+.ant-result-icon .anticon {
+  color: white !important;
+}
+
+.ant-result-icon .anticon svg {
+  width: 62px;
+  height: 62px;
+}
+
+.error-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.error-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  width: 90%;
+  height: 90%;
+  /* Center the content inside the card */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* 调整 Result 组件的样式 */
+.error-card .ant-result {
+  padding: 0;
+}
+
+.error-card .ant-result-title {
+  font-size: 24px; /* Adjust the font size as needed */
+  font-weight: bold; /* Make the text bold */
+}
