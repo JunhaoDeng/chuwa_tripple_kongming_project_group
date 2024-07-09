@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { create_product_set_category, create_product_set_category_errormsg, create_product_set_description, create_product_set_description_errormsg, create_product_set_image_link, create_product_set_image_link_errormsg, create_product_set_image_link_preview, create_product_set_image_link_preview_error, create_product_set_name, create_product_set_name_errormsg, create_product_set_price, create_product_set_price_errormsg, create_product_set_quantity, create_product_set_quantity_errormsg, signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg, 
+import { create_product_set_category, create_product_set_category_errormsg, create_product_set_description, create_product_set_description_errormsg, create_product_set_image_link, create_product_set_image_link_errormsg, create_product_set_image_link_preview, create_product_set_image_link_preview_error, create_product_set_name, create_product_set_name_errormsg, create_product_set_price, create_product_set_price_errormsg, create_product_set_quantity, create_product_set_quantity_errormsg, product_detail_set_category, product_detail_set_description, product_detail_set_id, product_detail_set_image_link, product_detail_set_name, product_detail_set_num_added, product_detail_set_price, signin_set_email, signin_set_email_errormsg, signin_set_password, signin_set_password_errormsg, 
     signin_toggle_show_password, signup_set_email, signup_set_email_errormsg, signup_set_isvendor, 
     signup_set_password, signup_set_password_errormsg, update_password_set_email, 
     update_password_set_email_errormsg } from './action';
@@ -108,8 +108,15 @@ const Slice = createSlice({
         createProductSetImageLink: create_product_set_image_link,
         createProductSetImageLinkErrormsg: create_product_set_image_link_errormsg,
         createProductSetImageLinkPreview: create_product_set_image_link_preview,
-        createProductSetImageLinkPreviewError: create_product_set_image_link_preview_error
+        createProductSetImageLinkPreviewError: create_product_set_image_link_preview_error,
 
+        productDetailSetId: product_detail_set_id,
+        productDetailSetName: product_detail_set_name,
+        productDetailSetPrice: product_detail_set_price,
+        productDetailSetNumAdded: product_detail_set_num_added,
+        productDetailSetImageLink: product_detail_set_image_link,
+        productDetailSetDescription: product_detail_set_description,
+        productDetailSetCategory: product_detail_set_category
     }
 });
 
@@ -130,7 +137,12 @@ export const { signinSetEmail, signinSetEmailErrormsg,
         createProductSetQuantity, createProductSetQuantityErrormsg,
         createProductSetImageLink, createProductSetImageLinkErrormsg, 
         createProductSetImageLinkPreview,
-        createProductSetImageLinkPreviewError
+        createProductSetImageLinkPreviewError,
+
+        productDetailSetId, productDetailSetName,
+        productDetailSetPrice, productDetailSetNumAdded,
+        productDetailSetImageLink, productDetailSetDescription,
+        productDetailSetCategory
     } = Slice.actions;
 
 export default Slice.reducer
