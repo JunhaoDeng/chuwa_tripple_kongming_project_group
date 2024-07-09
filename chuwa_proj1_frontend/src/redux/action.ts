@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 // Signin
 export const signin_set_email = (state: any, actions: PayloadAction<string>) => {
@@ -107,6 +107,27 @@ export const create_product_set_image_link_preview = (state: any, actions: Paylo
 
 export const create_product_set_image_link_preview_error = (state: any, actions: PayloadAction<boolean>) => {
     state.create_product.image_link_preview_error = actions.payload
+}
+
+type PSPLActionDataType = {
+    id: string,
+    name: string,
+    price: number,
+    num_added: number,
+    image_link: string
+}[];
+
+// products
+export const products_set_product_list = (state: any, actions: PayloadAction<PSPLActionDataType[]>) => {
+    state.products.product_list = actions.payload;
+}
+
+export const products_set_sortby = (state: any, actions: PayloadAction<number>) => {
+    state.products.sortby = actions.payload;
+}
+
+export const products_set_page_selected = (state: any, actions: PayloadAction<number>) => {
+    state.products.page_selected = actions.payload;
 }
 
 // product_detail

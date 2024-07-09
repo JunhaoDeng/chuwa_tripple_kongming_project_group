@@ -15,9 +15,9 @@ function App() {
       <Provider store={store}>
         <Layout>
           {/* <ProductsPage /> */}
-          <ProductDetailPage />
+          {/* <ProductDetailPage /> */}
           {/* <SignUpForm /> */}
-          {/* <SigninForm /> */}
+          <SigninForm />
           {/* <CreateProductForm /> */}
           {/* <UpdatePwdForm /> */}
         </Layout>
