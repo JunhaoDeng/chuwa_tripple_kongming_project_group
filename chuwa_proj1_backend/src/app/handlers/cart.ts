@@ -1,5 +1,4 @@
-import { log } from "console";
-import { Account, Cart, Product } from "../database/db";
+import { Account, Cart } from "../database/db";
 
 export const getAllProduct = async function (req, res, next) {
     try {
@@ -7,28 +6,25 @@ export const getAllProduct = async function (req, res, next) {
             path: 'cart',
             populate: {
                 path: 'items.product',
-                select: 'name price_cent img_link'
+                select: '_id name price_cent img_link'
             }
         });
-        // console.log(user);
-        
-        if (!user || !user.cart) {
-            console.error('Cart not found')
-            throw new Error('Cart not found');
+
+        if (!user.cart) {
+            res.status(200).json([]);
         }
 
-        const cartProducts = user.cart.items.map(item => {
-            // const product = item.product;
-            return {
-                productId: item.product,
-                name: item.product.name,
-                price: item.product.price_cent,
-                img_link: item.product.img_link,
-                quantity: item.quantity
-            };
-        });
+        console.log("User", user.cart);
+        const cartItems = user.cart.items.map(item => ({
+            productId: item.product._id,
+            name: item.product.name,
+            price_cent: item.product.price_cent,
+            img_link: item.product.img_link,
+            quantity: item.quantity
+        }));
+        console.log({ cartItems });
 
-        res.status(200).json(cartProducts);
+        res.status(200).json({ cartItems });
     } catch (err) {
         return next({
             status: 400,
@@ -38,8 +34,6 @@ export const getAllProduct = async function (req, res, next) {
 }
 
 export const increaseCart = async function (req, res, next) {
-    console.log("Hhhhhhh", req.params);
-    
     try {
         const userId = req.params.id;
         const productId = req.params.productId;
@@ -92,7 +86,7 @@ export const decreaseCart = async function (req, res, next) {
     try {
         const userId = req.params.id;
         const productId = req.params.productId;
-        
+
         const user = await Account.findById(userId).populate('cart');
         const cart = await Cart.findById(user.cart);
 
@@ -107,7 +101,7 @@ export const decreaseCart = async function (req, res, next) {
             await cart.save();
             console.log('Product decreasement successfully.');
         } else {
-            console.log('Product not in cart');
+            throw new Error('Product not found in cart');
         }
 
         // const updatedCart = Cart.findById(user.cart);
@@ -127,9 +121,16 @@ export const removeProduct = async function (req, res, next) {
         const user = await Account.findById(userId).populate('cart');
         const cart = await Cart.findById(user.cart);
 
-        cart.items = cart.items.filter(item => item.product.toString() !== productId);
-        await cart.save();
-        console.log('Product decreasement successfully.');
+        // if product not in cart
+        const cartItem = cart.items.find(item => item.product.toString() === productId);
+        if (cartItem) {
+            cart.items = cart.items.filter(item => item.product.toString() !== productId);
+            await cart.save();
+
+            console.log('Product delete successfully.');
+        } else {
+            throw new Error('Product not found in cart');
+        }
 
         return res.status(200).json(cart);
 
