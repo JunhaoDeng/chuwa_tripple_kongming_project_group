@@ -104,6 +104,14 @@ export default function SignUpForm() {
       })
       .then((data) => {
         console.log(data);
+        const token = sessionStorage.getItem("token");
+        //clear session storage
+        sessionStorage.clear();
+        sessionStorage.setItem("token", token as string);
+        dispatch(signupSetEmail(""));
+        dispatch(signupSetEmailErrormsg(""));
+        dispatch(signupSetPassword(""));
+        dispatch(signupSetPasswordErrormsg(""));
         // alert("Signup Success: " + data.message);
         navigate("/signin");
       }) // TODO: other things
