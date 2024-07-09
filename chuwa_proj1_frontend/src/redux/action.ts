@@ -109,3 +109,32 @@ export const create_product_set_image_link_preview_error = (state: any, actions:
     state.create_product.image_link_preview_error = actions.payload
 }
 
+// product_detail
+export const product_detail_set_id = (state: any, action: PayloadAction<string>) => {
+    state.product_detail.id = action.payload;
+}
+
+export const product_detail_set_name = (state: any, action: PayloadAction<string>) => {
+    state.product_detail.name = action.payload;
+}
+
+export const product_detail_set_price = (state: any, action: PayloadAction<number>) => {
+    state.product_detail.price = action.payload;
+}
+
+export const product_detail_set_num_added = (state: any, action: PayloadAction<number>) => {
+    state.product_detail.num_added = action.payload;
+}
+
+export const product_detail_set_image_link = (state: any, action: PayloadAction<string>) => {
+    state.product_detail.image_link = action.payload;
+}
+
+export const product_detail_set_description = (state: any, action: PayloadAction<string>) => {
+    state.product_detail.description = action.payload;
+}
+
+export const product_detail_set_category = (state: any, action: PayloadAction<string>) => {
+    state.product_detail.category = action.payload;
+}
+
