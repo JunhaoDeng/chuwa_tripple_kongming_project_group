@@ -32,7 +32,7 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
 
     const [tempCount, setTempCount] = useState<number>(count);
 
-    const handleAmountChange = (newAmount: number) => {
+    const handleAmountChange = (newAmount: number, isAdd: boolean) => {
         console.log(count);
         
         let decoded: any = null;
@@ -60,7 +60,8 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
         const thunkdata: ASThunkDatatype = {
             url: `${HOST}/api/users/${decoded.id}/cart/${product_id}`,
             product_id: product_id,
-            options: options
+            options: options,
+            isAdd: isAdd, 
         };
 
         // dispatch(productDetailAsyncSetNumAdded(thunkdata));
@@ -73,7 +74,7 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
             setTempCount(count);
             return;
         } else {
-            handleAmountChange(tempCount);
+            handleAmountChange(tempCount, true);
         }
     }
 
@@ -98,10 +99,10 @@ const QuantitiController = (props: QuantitiControllerPropType) => {
             }}
         >
             <Space.Compact block style={{ width: "5rem"}}>
-                <Button style={{ width: '25%' }} size='small' icon={<MinusOutlined onClick={() => handleAmountChange(count - 1)} />}></Button>
+                <Button style={{ width: '25%' }} size='small' icon={<MinusOutlined onClick={() => handleAmountChange(count - 1, false)} />}></Button>
                 <InputNumber style={{ width: '50%' }} className="quantityInput" size="small" controls={false} defaultValue={count} value={count}
                  onChange={(val) => handleInputChange(val)} onBlur={ handleInputBlur }/>
-                <Button style={{ width: '25%' }} size='small' icon={<PlusOutlined onClick={() => handleAmountChange(count + 1)} />}></Button>
+                <Button style={{ width: '25%' }} size='small' icon={<PlusOutlined onClick={() => handleAmountChange(count + 1, true)} />}></Button>
             </Space.Compact>
         </ConfigProvider>
     )

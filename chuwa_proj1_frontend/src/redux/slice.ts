@@ -18,6 +18,7 @@ export type ASThunkDatatype = {
     product_id: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     options: any
+    isAdd: boolean
 }
 export interface CartItem {
     productId: string;
@@ -30,6 +31,7 @@ export interface CartItem {
 interface CartState {
     cartItems: CartItem[];
     subtotal: number;
+    count: number;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }
@@ -80,7 +82,8 @@ export const productAsyncSetNumAdded = createAsyncThunk(
                 }
                 const result: PSONAActionType = {
                     newCount: newCount,
-                    product_id: thunkData.product_id
+                    product_id: thunkData.product_id,
+                    isAdd: thunkData.isAdd,
                 }
                 return result;
             })
@@ -208,6 +211,7 @@ const Slice = createSlice({
         cart: {
             cartItems: [],
             subtotal: 0, // subtotal in cent
+            count: 0,
             status: 'idle',
             error: "null",
             // discount_code: "", // discount code input data
@@ -268,18 +272,31 @@ const Slice = createSlice({
         builder.addCase(productAsyncSetNumAdded.fulfilled, products_set_one_num_added);
         builder.addCase(fetchCart.pending, (state) => {
             state.cart.status = 'loading';
-        })
+        });
         builder.addCase(fetchCart.fulfilled, (state, action: PayloadAction<CartItem[]>) => {
             state.cart.status = 'succeeded';
             state.cart.cartItems = action.payload;
+            state.cart.count = action.payload.reduce((total, item) => total + item.quantity, 0);
             state.cart.subtotal = action.payload.reduce((total, item) => total + item.price_cent * item.quantity, 0);
-        })
+        });
         builder.addCase(fetchCart.rejected, (state, action) => {
             state.cart.status = 'failed';
             state.cart.error = action.error.message || 'Failed to fetch cart';
-        })
+        });
         builder.addCase(addOrUpdateCartItem.fulfilled, add_or_update_cart_item);
-        
+        builder.addCase(deleteCartItem.pending, (state) => {
+            state.cart.status = 'loading';
+        });
+        builder.addCase(deleteCartItem.fulfilled, (state, action: PayloadAction<CartItem[]>) => {
+            state.cart.status = 'succeeded';
+            state.cart.cartItems = action.payload;
+            state.cart.count = action.payload.reduce((total, item) => total + item.quantity, 0);
+            state.cart.subtotal = action.payload.reduce((total, item) => total + item.price_cent * item.quantity, 0);
+        });
+        builder.addCase(deleteCartItem.rejected, (state, action) => {
+            state.cart.status = 'failed';
+            state.cart.error = action.error.message || 'Failed to fetch cart';
+        });
     },
 });
 
@@ -353,34 +370,41 @@ export const addOrUpdateCartItem = createAsyncThunk(
 // );
 
 // Decrease cart item
-export const decreaseCartItem = createAsyncThunk<CartItem, string>(
-    'cart/decreaseCartItem',
-    async (productId) => {
-        const userId = getUserIdFromToken();
-        const token = getToken();
-        const response = await axios.put<CartItem>(`/api/users/${userId}/cart/${productId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-        return response.data;
-    }
-);
+// export const decreaseCartItem = createAsyncThunk<CartItem, string>(
+//     'cart/decreaseCartItem',
+//     async (productId) => {
+//         const userId = getUserIdFromToken();
+//         const token = getToken();
+//         const response = await axios.put<CartItem>(`/api/users/${userId}/cart/${productId}`,
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${token}`
+//                 }
+//             });
+//         return response.data;
+//     }
+// );
 
 // Delete cart item
-export const deleteCartItem = createAsyncThunk<string, string>(
+export const deleteCartItem = createAsyncThunk<CartItem[]>(
     'cart/deleteCartItem',
     async (productId) => {
         const userId = getUserIdFromToken();
         const token = getToken();
-        const response = await axios.delete<{ productId: string }>(`/api/users/${userId}/cart/${productId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-        return response.data.productId;
+
+        const response = await fetch(`${HOST}/api/users/${userId}/cart/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete cart item');
+        }
+
+        const data = await response.json();
+        return data.cartItems;
     }
 );
 

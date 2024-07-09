@@ -67,7 +67,8 @@ const ItemCard = (props: ItemCardPropsType) => {
     const thunkdata: ASThunkDatatype = {
         url: `${HOST}/api/users/${tokenDec.id}/cart/${product.id}`,
         product_id: product.id,
-        options: options
+        options: options,
+        isAdd: true
     };
 
     dispatch(productAsyncSetNumAdded(thunkdata));
