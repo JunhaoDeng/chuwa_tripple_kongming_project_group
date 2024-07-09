@@ -61,7 +61,7 @@ export default function SigninForm() {
       .then((response) => response.json())
       .then((data) => {
         console.log("success");
-        console.log(data.token);
+        console.log("token: " + data.token);
         sessionStorage.setItem("token", data.token);
       })
       .catch((err) => {
@@ -69,6 +69,15 @@ export default function SigninForm() {
       });
     navigate("/products");
   };
+
+  const handleSignupNav = () => {
+    navigate("/signup");
+  };
+
+  const handleUpdatePasswordNav = () => {
+    navigate("/update-password");
+  };
+
   return (
     <div className="form_container">
       <div className="form">
@@ -108,11 +117,11 @@ export default function SigninForm() {
         <div className="bottomrow">
           <div className="alt">
             Don't have an account?{" "}
-            <a className="link" href="google.com">
+            <a className="link" onClick={handleSignupNav}>
               Sign up
             </a>
           </div>
-          <a className="link" href="google.com">
+          <a className="link" onClick={handleUpdatePasswordNav}>
             Forgot password?
           </a>
         </div>
