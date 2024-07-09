@@ -16,6 +16,7 @@ import { HOST } from "../config";
 import { useNavigate } from "react-router-dom";
 import { signupClearEmail, signupClearPassword } from "../redux/slice";
 import CloseIcon from "./CloseIcon";
+import React, { useState } from "react";
 
 // a's will be replaced by Link element in the future
 
@@ -27,6 +28,7 @@ type SignupDataType = {
 };
 
 export default function SignUpForm() {
+  const [isFormValid, setIsFormValid] = useState(false); // state to track overall form validity
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const checkEmailFunc = (data: string) => {
@@ -127,6 +129,11 @@ export default function SignUpForm() {
     navigate("/signin");
   };
 
+  const handleInputChange = (value: string, valid: boolean) => {
+    // logic to handle input change and validity
+    setIsFormValid(valid);
+  };
+
   return (
     <div className="form_container">
       <div className="form">
@@ -142,6 +149,7 @@ export default function SignUpForm() {
           errormsgDataSelectorFunc={email_errormsg_selector}
           inputDataAction={signupSetEmail}
           errormsgAction={signupSetEmailErrormsg}
+          onInputChange={handleInputChange}
         />
         <Field
           label="Password"
@@ -153,6 +161,7 @@ export default function SignUpForm() {
           errormsgDataSelectorFunc={pwd_errormsg_selector}
           inputDataAction={signupSetPassword}
           errormsgAction={signupSetPasswordErrormsg}
+          onInputChange={handleInputChange}
         />
         <CheckboxRow
           label="This is a vendor account"
@@ -163,7 +172,7 @@ export default function SignUpForm() {
         <button
           className="form_submit_button"
           onClick={handleFormSubmit}
-          // disabled={hasError}
+          disabled={!isFormValid}
         >
           Create Account
         </button>
