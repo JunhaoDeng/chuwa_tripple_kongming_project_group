@@ -179,7 +179,7 @@ const ProductDetailPage: React.FC = () => {
                             </Paragraph>
                         </Typography>
                         <Flex style={{width: '70%', marginTop: '1rem'}} gap="small">
-                            {num_added === 0 && <Button className={btnStyles.uniformPrimaryBtn} style={{ flex: '1 1 0' }} type="primary" onClick={ handleAddProduct }>Add To Cart</Button>}
+                            {num_added === 0 && <Button className={btnStyles.uniformPrimaryBtn} style={{ flex: '1 1 0' }} type="primary" size="small" onClick={ handleAddProduct }>Add To Cart</Button>}
                             {num_added !== 0 && <QuantitiController quantitySelectorFunc={ quantitySelector } 
                                     productIdSelectorFunc={productIdSelector} setQuantityAction={ productDetailAsyncSetNumAdded } />}
                             <Button style={{ flex: '1 1 0' }} size="small" onClick={handleEditClicked }>Edit</Button>
